@@ -15,6 +15,7 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
+        System.out.println("Hello, world!");
         stage.setScene(scene);
         stage.show();
     }
