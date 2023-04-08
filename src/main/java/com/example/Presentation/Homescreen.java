@@ -52,6 +52,16 @@ public class Homescreen extends Application {
         Scene scene = new Scene(hbox, 800, 600);
         stage.setScene(scene);
         stage.show();
+
+        // logic for buttons
+        module.setOnAction(e -> {
+            try {
+                ModuleScreen moduleScreen = new ModuleScreen();
+                moduleScreen.start(stage);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        });
     }
 
     public static void main(String[] args) {
