@@ -37,9 +37,9 @@ public class CursistDAOImpl implements CursistDAO {
     String email = resultSet.getString("email");
     String telefoonnummer = resultSet.getString("telefoonnummer");
 
-    Cursist cursist = new Cursist(id, naam, adres, woonplaats, email,
-    telefoonnummer);
-    cursisten.add(cursist);
+    // Cursist cursist = new Cursist(id, naam, adres, woonplaats, email,
+    // telefoonnummer);
+    // cursisten.add(cursist);
     }
 
     } catch (SQLException e) {

@@ -14,8 +14,7 @@ public class Cursist {
     private Geslacht geslacht;
     private List<Cursus> cursus;
 
-    public Cursist(String emailAdres, String naam, Date geboorteDatuml, Adres adres, int cursistid, Geslacht geslacht,
-            List<Cursus> cursus) {
+    public Cursist(String emailAdres, String naam, Date geboorteDatuml, Adres adres, int cursistid, Geslacht geslacht) {
         this.emailAdres = emailAdres;
         this.naam = naam;
         this.geboorteDatuml = geboorteDatuml;

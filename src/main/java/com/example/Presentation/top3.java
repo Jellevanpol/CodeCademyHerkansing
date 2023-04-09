@@ -26,13 +26,15 @@ public class top3 extends Application {
         ComboBox<String> dropdown = new ComboBox<>();
         dropdown.getItems().addAll("Option 1", "Option 2", "Option 3");
         dropdown.getSelectionModel().selectFirst();
-        dropdown.setMaxWidth(Double.MAX_VALUE);
 
         Text nr1 = new Text("Webcast nr 1");
         Text nr2 = new Text("Webcast nr 2");
         Text nr3 = new Text("Webcast nr 3");
 
-        VBox vbox = new VBox(dropdown, nr1, nr2, nr3);
+        VBox vboxText = new VBox(nr1, nr2, nr3);
+        vboxText.setAlignment(Pos.CENTER);
+
+        VBox vbox = new VBox(10, dropdown, vboxText);
         vbox.setAlignment(Pos.CENTER);
 
         back.setOnAction(e -> {
@@ -45,7 +47,7 @@ public class top3 extends Application {
         });
 
         BorderPane root = new BorderPane();
-        root.setCenter(vbox);
+        root.setCenter (vbox);
         root.setBottom(back);
         BorderPane.setAlignment(back, Pos.BOTTOM_LEFT);
         
