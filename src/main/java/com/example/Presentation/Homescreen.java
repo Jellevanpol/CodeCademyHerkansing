@@ -62,6 +62,15 @@ public class Homescreen extends Application {
                 ex.printStackTrace();
             }
         });
+
+        student.setOnAction(e -> {
+            try {
+                StudentScreen studentScreen = new StudentScreen();
+                studentScreen.start(stage);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        });
     }
 
     public static void main(String[] args) {

@@ -4,5 +4,5 @@ import java.util.List;
 import com.example.Domain.Cursist;
 
 public interface CursistDAO {
-    List<Cursist> getAllCursisten();
+    // List<Cursist> getAllCursisten();
 }

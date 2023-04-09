@@ -3,6 +3,9 @@ package com.example.Presentation;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.example.Domain.Cursist;
+import com.example.Domain.Cursus;
+
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -15,59 +18,58 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class ModuleScreen extends Application {
+public class StudentScreen extends Application {
     private TableView<Module> tableView;
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
-        // Create the dropdown menu
+    public void start(Stage stage) throws Exception {
         Button back = new Button("Back");
         back.setPrefSize(100, 50);
 
-        ComboBox<String> dropdown = new ComboBox<>();
-        dropdown.getItems().addAll("Option 1", "Option 2", "Option 3");
-        dropdown.getSelectionModel().selectFirst();
-        dropdown.setMaxWidth(Double.MAX_VALUE);
+        // String -> Cursist
+        ComboBox<String> comboStudent = new ComboBox<>();
+        comboStudent.getItems().addAll("Option 1", "Option 2", "Option 3");
 
-        // Create the table view
+        // String -> Cursus
+        ComboBox<String> comboCourse = new ComboBox<>();
+        comboCourse.getItems().addAll("Option 1", "Option 2", "Option 3");
+
         TableColumn<Module, String> moduleColumn = new TableColumn<>("Module");
         moduleColumn.setCellValueFactory(new PropertyValueFactory<>("module"));
 
-        TableColumn<Module, Double> progressColumn = new TableColumn<>("Progress");
-        progressColumn.setCellValueFactory(new PropertyValueFactory<>("progress"));
+        TableColumn<Module, String> cursusColumn = new TableColumn<>("Cursus");
+        cursusColumn.setCellValueFactory(new PropertyValueFactory<>("cursus"));
 
         List<TableColumn<Module, ?>> columns = new ArrayList<>();
         columns.add(moduleColumn);
-        columns.add(progressColumn);
+        columns.add(cursusColumn);
 
         tableView = new TableView<>();
         tableView.getColumns().addAll(columns);
         tableView.setMaxWidth(300);
         tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
-        // Create a VBox to hold the dropdown and the table view
-        VBox vBox = new VBox(10, dropdown, tableView);
+        VBox vBox = new VBox(10, comboStudent, comboCourse, tableView);
         vBox.setAlignment(Pos.CENTER);
 
-        // Create a BorderPane and put the VBox in the center
         BorderPane root = new BorderPane();
         root.setCenter(vBox);
         root.setBottom(back);
         BorderPane.setAlignment(back, Pos.BOTTOM_LEFT);
 
-        // Create the scene and set it on the stage
         Scene scene = new Scene(root, 800, 600);
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        stage.setScene(scene);
+        stage.show();
 
-        // Logic buttons
+        // logic Buttons
         back.setOnAction(e -> {
             try {
                 Homescreen homescreen = new Homescreen();
-                homescreen.start(primaryStage);
+                homescreen.start(stage);
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
         });
     }
+
 }
