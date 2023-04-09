@@ -1,5 +1,6 @@
 package com.example.Domain;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -8,20 +9,20 @@ import com.example.Domain.Enumerations.Geslacht;
 public class Cursist {
     private String emailAdres;
     private String naam;
-    private Date geboorteDatuml;
+    private Date geboorteDatum;
     private Adres adres;
     private int cursistid;
     private Geslacht geslacht;
     private List<Cursus> cursus;
 
-    public Cursist(String emailAdres, String naam, Date geboorteDatuml, Adres adres, int cursistid, Geslacht geslacht) {
+    public Cursist(String emailAdres, String naam, Date geboorteDatum, Adres adres, int cursistid, Geslacht geslacht) {
         this.emailAdres = emailAdres;
         this.naam = naam;
-        this.geboorteDatuml = geboorteDatuml;
+        this.geboorteDatum = geboorteDatum;
         this.adres = adres;
         this.cursistid = cursistid;
         this.geslacht = geslacht;
-        this.cursus = cursus;
+        this.cursus = new ArrayList<>();
     }
 
     public String getEmailAdres() {
@@ -40,12 +41,12 @@ public class Cursist {
         this.naam = naam;
     }
 
-    public Date getGeboorteDatuml() {
-        return this.geboorteDatuml;
+    public Date getGeboorteDatum() {
+        return this.geboorteDatum;
     }
 
-    public void setGeboorteDatuml(Date geboorteDatuml) {
-        this.geboorteDatuml = geboorteDatuml;
+    public void setGeboorteDatum(Date geboorteDatum) {
+        this.geboorteDatum = geboorteDatum;
     }
 
     public Adres getAdres() {
