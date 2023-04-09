@@ -19,33 +19,33 @@ public class CursistDAOImpl implements CursistDAO {
         this.connection = databaseConnection.getConnection();
     }
 
-    // @Override
-    // public List<Cursist> getAllCursisten() {
-    // List<Cursist> cursisten = new ArrayList<>();
+    @Override
+    public List<Cursist> getAllCursisten() {
+    List<Cursist> cursisten = new ArrayList<>();
 
-    // String query = "SELECT * FROM Cursist";
+    String query = "SELECT * FROM Cursist";
 
-    // try {
-    // PreparedStatement statement = connection.prepareStatement(query);
-    // ResultSet resultSet = statement.executeQuery();
+    try {
+    PreparedStatement statement = connection.prepareStatement(query);
+    ResultSet resultSet = statement.executeQuery();
 
-    // while (resultSet.next()) {
-    // int id = resultSet.getInt("id");
-    // String naam = resultSet.getString("naam");
-    // String adres = resultSet.getString("adres");
-    // String woonplaats = resultSet.getString("woonplaats");
-    // String email = resultSet.getString("email");
-    // String telefoonnummer = resultSet.getString("telefoonnummer");
+    while (resultSet.next()) {
+    int id = resultSet.getInt("id");
+    String naam = resultSet.getString("naam");
+    String adres = resultSet.getString("adres");
+    String woonplaats = resultSet.getString("woonplaats");
+    String email = resultSet.getString("email");
+    String telefoonnummer = resultSet.getString("telefoonnummer");
 
-    // // Cursist cursist = new Cursist(id, naam, adres, woonplaats, email,
-    // // telefoonnummer);
-    // // cursisten.add(cursist);
-    // }
+    Cursist cursist = new Cursist(id, naam, adres, woonplaats, email,
+    telefoonnummer);
+    cursisten.add(cursist);
+    }
 
-    // } catch (SQLException e) {
-    // e.printStackTrace();
-    // }
+    } catch (SQLException e) {
+    e.printStackTrace();
+    }
 
-    // return cursisten;
-    // }
+    return cursisten;
+    }
 }

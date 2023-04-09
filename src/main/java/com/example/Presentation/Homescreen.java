@@ -50,6 +50,7 @@ public class Homescreen extends Application {
 
         // Set scene
         Scene scene = new Scene(hbox, 800, 600);
+        stage.setTitle("Jelle van Pol (220618) & Kenan van der Heijden (2197280)");
         stage.setScene(scene);
         stage.show();
 
@@ -67,6 +68,14 @@ public class Homescreen extends Application {
             try {
                 StudentScreen studentScreen = new StudentScreen();
                 studentScreen.start(stage);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        });
+        top3.setOnAction(e ->{
+            try{
+                top3 top3Screen = new top3();
+                top3Screen.start(stage);
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
