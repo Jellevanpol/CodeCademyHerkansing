@@ -33,14 +33,8 @@ public class CursistDAOImpl implements CursistDAO {
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
-                String emailAdres = resultSet.getString("EmailAdres");
                 String naam = resultSet.getString("Naam");
-                Date geboorteDatum = resultSet.getDate("GeboorteDatum");
-                String adres = resultSet.getString("Adres");
-                int cursistid = resultSet.getInt("Cursistid");
-                String geslacht = resultSet.getString("Geslacht");
-
-                Cursist cursist = new Cursist(emailAdres, naam, geboorteDatum, adres, cursistid, geslacht);
+                Cursist cursist = new Cursist(naam);
                 cursisten.add(cursist);
             }
 

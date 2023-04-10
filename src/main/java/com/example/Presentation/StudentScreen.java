@@ -98,9 +98,7 @@ public class StudentScreen extends Application {
     }
 
     public void populateComboBoxNames(ComboBox<String> comboBox) {
-        for (Cursist c : cursisten) {
-            comboBox.getItems().add(c.getNaam());
-        }
+        cursisten.stream().map(Cursist::getNaam).forEach(comboBox.getItems()::add);
     }
 
     public void populateComboBoxCourses(ComboBox<String> comboBox, ComboBox<String> comboBox2) {
