@@ -3,9 +3,6 @@ package com.example.Presentation;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.example.Domain.Cursist;
-import com.example.Domain.Cursus;
-
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;

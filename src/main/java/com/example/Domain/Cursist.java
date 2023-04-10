@@ -1,5 +1,6 @@
 package com.example.Domain;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -14,14 +15,13 @@ public class Cursist {
     private Geslacht geslacht;
     private List<Cursus> cursus;
 
-    public Cursist(String emailAdres, String naam, Date geboorteDatuml, Adres adres, int cursistid, Geslacht geslacht) {
+    public Cursist(String emailAdres, String naam, Date geboorteDatuml, Adres adres, Geslacht geslacht) {
         this.emailAdres = emailAdres;
         this.naam = naam;
         this.geboorteDatuml = geboorteDatuml;
         this.adres = adres;
-        this.cursistid = cursistid;
         this.geslacht = geslacht;
-        this.cursus = cursus;
+        this.cursus = new ArrayList<>();
     }
 
     public String getEmailAdres() {

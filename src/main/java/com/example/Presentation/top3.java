@@ -1,16 +1,10 @@
 package com.example.Presentation;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -47,14 +41,15 @@ public class top3 extends Application {
         });
 
         BorderPane root = new BorderPane();
-        root.setCenter (vbox);
+        root.setCenter(vbox);
         root.setBottom(back);
         BorderPane.setAlignment(back, Pos.BOTTOM_LEFT);
-        
+
         Scene scene = new Scene(root, 800, 600);
         stage.setScene(scene);
         stage.show();
     }
+
     public static void main(String[] args) {
         launch(Homescreen.class);
     }
