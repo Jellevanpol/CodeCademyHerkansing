@@ -21,7 +21,8 @@ public class Completed extends Application {
         dropdown.getItems().addAll("Option 1", "Option 2", "Option 3");
         dropdown.getSelectionModel().selectFirst();
 
-        Text behaald = new Text("Behaald: ");
+        Text behaald = new Text("Behaald...");
+
 
         VBox vboxText = new VBox(behaald);
         vboxText.setAlignment(Pos.CENTER);
