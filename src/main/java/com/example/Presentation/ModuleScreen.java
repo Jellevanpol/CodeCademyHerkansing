@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javafx.application.Application;
+import javafx.beans.Observable;
+import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -17,21 +19,26 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import com.example.Database.DatabaseConnection;
+import com.example.Database.DAO.CursusDAO;
 import com.example.Database.DAO.ModuleDAO;
+import com.example.Database.DAO.Implementations.CursusDAOImpl;
 import com.example.Database.DAO.Implementations.ModuleDAOImpl;
 import com.example.Domain.Module;
+import com.example.Domain.Cursus;
 
 public class ModuleScreen extends Application {
 
     private DatabaseConnection databaseConnection;
-    private TableView<Module> tableView;
+    private TableView<Module> tableView = new TableView<>();
     private ModuleDAO moduleDAO;
-    private List<Module> modules;
+    private List<Cursus> cursussen;
+    private CursusDAO cursusDAO;
 
     public ModuleScreen() throws SQLException {
         databaseConnection = new DatabaseConnection();
+        cursusDAO = new CursusDAOImpl(databaseConnection);
+        cursussen = cursusDAO.getAllCursussen();
         moduleDAO = new ModuleDAOImpl(databaseConnection);
-        modules = moduleDAO.getAllModules();
     }
 
     @Override
@@ -41,25 +48,24 @@ public class ModuleScreen extends Application {
         back.setPrefSize(100, 50);
 
         ComboBox<String> dropdown = new ComboBox<>();
-        modules.stream().map(Module::getTitel).forEach(dropdown.getItems()::add);
+        cursussen.stream().map(Cursus::getCursusNaam).forEach(dropdown.getItems()::add);
         dropdown.getSelectionModel().selectFirst();
         dropdown.setMaxWidth(Double.MAX_VALUE);
 
         // Create the table view
-        TableColumn<Module, String> moduleColumn = new TableColumn<>("Module");
-        moduleColumn.setCellValueFactory(new PropertyValueFactory<>("module"));
+        TableColumn<Module, String> titelColumn = new TableColumn<>("Titel");
+        titelColumn.setCellValueFactory(new PropertyValueFactory<>("titel"));
 
-        TableColumn<Module, Double> progressColumn = new TableColumn<>("Progress");
+        TableColumn<Module, Double> progressColumn = new TableColumn<>("Voortgang");
         progressColumn.setCellValueFactory(new PropertyValueFactory<>("progress"));
 
-        List<TableColumn<Module, ?>> columns = new ArrayList<>();
-        columns.add(moduleColumn);
-        columns.add(progressColumn);
-
-        tableView = new TableView<>();
-        tableView.getColumns().addAll(columns);
+        tableView.getColumns().setAll(titelColumn, progressColumn);
         tableView.setMaxWidth(300);
         tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        if (dropdown.getValue() != null) {
+            ObservableList<Module> modules = moduleDAO.getAllAverageModulesFromCursus(dropdown.getValue());
+            tableView.setItems(modules);
+        }
 
         // Create a VBox to hold the dropdown and the table view
         VBox vBox = new VBox(10, dropdown, tableView);
@@ -85,9 +91,5 @@ public class ModuleScreen extends Application {
                 ex.printStackTrace();
             }
         });
-    }
-
-    public void populateDrowDown(ComboBox<String> comboBox) {
-
     }
 }

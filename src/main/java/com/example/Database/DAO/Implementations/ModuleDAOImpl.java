@@ -1,7 +1,6 @@
 package com.example.Database.DAO.Implementations;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,6 +10,9 @@ import java.util.List;
 import com.example.Database.DatabaseConnection;
 import com.example.Database.DAO.ModuleDAO;
 import com.example.Domain.Module;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 public class ModuleDAOImpl implements ModuleDAO {
 
@@ -23,7 +25,9 @@ public class ModuleDAOImpl implements ModuleDAO {
     @Override
     public List<Module> getAllModules() {
         List<Module> modules = new ArrayList<>();
-        String query = "SELECT Titel FROM Module ";
+        String query = "SELECT Titel, AVG(Voortgang) AS AVG_Voortgang " +
+                "FROM Module " +
+                "GROUP BY contentID ";
 
         try {
             PreparedStatement statement = connection.prepareStatement(query);
@@ -31,8 +35,9 @@ public class ModuleDAOImpl implements ModuleDAO {
 
             while (resultSet.next()) {
                 String titel = resultSet.getString("Titel");
+                String progress = resultSet.getDouble("AVG_Voortgang") + "%";
 
-                Module module = new Module(titel);
+                Module module = new Module(titel, progress);
                 modules.add(module);
             }
 
@@ -43,31 +48,56 @@ public class ModuleDAOImpl implements ModuleDAO {
     }
 
     @Override
-    public List<Module> getAllModulesFromCursus(int cursistID) {
-        List<Module> modules = new ArrayList<>();
+    public ObservableList<Module> getAllAverageModulesFromCursus(String cursusNaam) {
+        ObservableList<Module> modules = FXCollections.observableArrayList();
 
-        String query = "SELECT m.*, co.NaamContact, co.EmailContact " +
+        String query = "SELECT m.Titel, cu.CursusNaam, AVG(Voortgang) AS AVG_Voortgang " +
                 "FROM Module m " +
-                "JOIN Module_Contact mc on mc.ModuleID = m.ModuleID " +
-                "JOIN Contact co on co.ContactID = mc.ContactID " +
-                "JOIN [Content-Item] c on m.contentID = c.contentID " +
-                "JOIN [Cursist_Content-item] cci on cci.ContentId = c.ContentID " +
-                "JOIN Cursist cu on cu.CursistId = cci.CursistId " +
-                "WHERE cu.CursistId = ? ";
+                "JOIN [Content-Item] ci on ci.ContentID = m.contentID " +
+                "JOIN [Cursus_ContentItem] cci on cci.ContentID = m.contentID " +
+                "JOIN Cursus cu on cu.CursusID = cci.CursusID " +
+                "WHERE cu.CursusNaam = ? " +
+                "GROUP BY m.Titel, cu.CursusNaam, m.contentID, m.Voortgang, m.ModuleID ";
 
         try {
             PreparedStatement statement = connection.prepareStatement(query);
-            statement.setInt(1, cursistID);
+            statement.setString(1, cursusNaam);
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
-                String versie = resultSet.getString("Versie");
-                String naamContact = resultSet.getString("NaamContact");
-                String emailContact = resultSet.getString("EmailContact");
-                int volgnummer = resultSet.getInt("Volgnummer");
                 String titel = resultSet.getString("Titel");
+                String progress = resultSet.getDouble("AVG_Voortgang") + "%";
+                Module module = new Module(titel, progress);
+                modules.add(module);
+            }
 
-                Module module = new Module(versie, naamContact, emailContact, volgnummer, titel);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return modules;
+    }
+
+    @Override
+    public ObservableList<Module> getAllModulesFromCursus(String cursusNaam) {
+        ObservableList<Module> modules = FXCollections.observableArrayList();
+
+        String query = "SELECT m.Titel, cu.CursusNaam, Voortgang " +
+                "FROM Module m " +
+                "JOIN [Content-Item] ci on ci.ContentID = m.contentID " +
+                "JOIN [Cursus_ContentItem] cci on cci.ContentID = m.contentID " +
+                "JOIN Cursus cu on cu.CursusID = cci.CursusID " +
+                "WHERE cu.CursusNaam = ? ";
+
+        try {
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, cursusNaam);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                String titel = resultSet.getString("Titel");
+                String progress = resultSet.getDouble("Voortgang") + "%";
+                Module module = new Module(titel, progress);
                 modules.add(module);
             }
 

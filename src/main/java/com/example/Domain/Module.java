@@ -6,6 +6,7 @@ public class Module {
     private String emailContact;
     private int volgNummer;
     private String titel;
+    private String progress;
 
     public Module(String versie, String naamContact, String emailContact, int volgNummer, String titel) {
         this.versie = versie;
@@ -15,8 +16,17 @@ public class Module {
         this.titel = titel;
     }
 
-    public Module(String titel) {
+    public Module(String titel, String progress) {
         this.titel = titel;
+        this.progress = progress;
+    }
+
+    public String getProgress() {
+        return this.progress;
+    }
+
+    public void setProgress(String progress) {
+        this.progress = progress;
     }
 
     public String getVersie() {

@@ -7,13 +7,16 @@ import java.util.List;
 import com.example.Database.DatabaseConnection;
 import com.example.Database.DAO.CursistDAO;
 import com.example.Database.DAO.CursusDAO;
+import com.example.Database.DAO.ModuleDAO;
 import com.example.Database.DAO.Implementations.CursistDAOImpl;
 import com.example.Database.DAO.Implementations.CursusDAOImpl;
+import com.example.Database.DAO.Implementations.ModuleDAOImpl;
 import com.example.Domain.Cursist;
 import com.example.Domain.Cursus;
 import com.example.Domain.Module;
 
 import javafx.application.Application;
+import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -26,18 +29,20 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class StudentScreen extends Application {
-    private TableView<Module> tableView;
+    private TableView<Module> tableView = new TableView<>();
     private CursusDAO cursusDAO;
     private DatabaseConnection databaseConnection;
     private CursistDAO cursistDAO;
     private List<Cursist> cursisten;
     private List<Cursus> courses;
+    private ModuleDAO moduleDAO;
 
     public StudentScreen() throws SQLException {
         databaseConnection = new DatabaseConnection();
         cursistDAO = new CursistDAOImpl(databaseConnection);
         cursusDAO = new CursusDAOImpl(databaseConnection);
         cursisten = cursistDAO.getAllCursisten();
+        moduleDAO = new ModuleDAOImpl(databaseConnection);
     }
 
     @Override
@@ -59,20 +64,21 @@ public class StudentScreen extends Application {
             populateComboBoxCourses(comboCourse, comboStudent);
         });
 
-        TableColumn<Module, String> moduleColumn = new TableColumn<>("Module");
-        moduleColumn.setCellValueFactory(new PropertyValueFactory<>("module"));
+        TableColumn<Module, String> titelColumn = new TableColumn<>("Titel");
+        titelColumn.setCellValueFactory(new PropertyValueFactory<>("titel"));
 
-        TableColumn<Module, String> cursusColumn = new TableColumn<>("Cursus");
-        cursusColumn.setCellValueFactory(new PropertyValueFactory<>("cursus"));
+        TableColumn<Module, Double> progressColumn = new TableColumn<>("Voortgang");
+        progressColumn.setCellValueFactory(new PropertyValueFactory<>("progress"));
 
-        List<TableColumn<Module, ?>> columns = new ArrayList<>();
-        columns.add(moduleColumn);
-        columns.add(cursusColumn);
-
-        tableView = new TableView<>();
-        tableView.getColumns().addAll(columns);
+        tableView.getColumns().setAll(titelColumn, progressColumn);
         tableView.setMaxWidth(300);
         tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        comboCourse.valueProperty().addListener((obs, oldVal, newVal) -> {
+            if (newVal != null && comboStudent.getValue() != null) {
+                ObservableList<Module> modules = moduleDAO.getAllModulesFromCursus(newVal);
+                tableView.setItems(modules);
+            }
+        });
 
         VBox vBox = new VBox(10, comboStudent, comboCourse, tableView);
         vBox.setAlignment(Pos.CENTER);

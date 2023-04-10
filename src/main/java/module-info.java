@@ -5,6 +5,7 @@ module com.example {
     requires java.sql;
 
     opens com.example.Presentation to javafx.fxml;
+    opens com.example.Domain to javafx.base;
 
     exports com.example.Presentation;
 }

@@ -22,8 +22,24 @@ public class CursusDAOImpl implements CursusDAO {
 
     @Override
     public List<Cursus> getAllCursussen() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getAllCursussen'");
+        String query = "SELECT * FROM Cursus ";
+        List<Cursus> cursussen = new ArrayList<>();
+
+        try {
+            PreparedStatement statement = connection.prepareStatement(query);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                String cursusNaam = resultSet.getString("CursusNaam");
+                Cursus cursus = new Cursus(cursusNaam);
+                cursussen.add(cursus);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return cursussen;
     }
 
     @Override

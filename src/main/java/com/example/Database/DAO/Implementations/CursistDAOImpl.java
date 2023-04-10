@@ -10,7 +10,6 @@ import java.util.List;
 
 import com.example.Database.DatabaseConnection;
 import com.example.Database.DAO.CursistDAO;
-import com.example.Domain.Adres;
 import com.example.Domain.Cursist;
 import com.example.Domain.Enumerations.Geslacht;
 
