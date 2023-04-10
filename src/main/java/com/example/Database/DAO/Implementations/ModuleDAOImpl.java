@@ -22,8 +22,24 @@ public class ModuleDAOImpl implements ModuleDAO {
 
     @Override
     public List<Module> getAllModules() {
-        // TODO Auto-generated method stub
-        return null;
+        List<Module> modules = new ArrayList<>();
+        String query = "SELECT Titel FROM Module ";
+
+        try {
+            PreparedStatement statement = connection.prepareStatement(query);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                String titel = resultSet.getString("Titel");
+
+                Module module = new Module(titel);
+                modules.add(module);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return modules;
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.example.Presentation;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,8 +16,23 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import com.example.Database.DatabaseConnection;
+import com.example.Database.DAO.ModuleDAO;
+import com.example.Database.DAO.Implementations.ModuleDAOImpl;
+import com.example.Domain.Module;
+
 public class ModuleScreen extends Application {
+
+    private DatabaseConnection databaseConnection;
     private TableView<Module> tableView;
+    private ModuleDAO moduleDAO;
+    private List<Module> modules;
+
+    public ModuleScreen() throws SQLException {
+        databaseConnection = new DatabaseConnection();
+        moduleDAO = new ModuleDAOImpl(databaseConnection);
+        modules = moduleDAO.getAllModules();
+    }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -25,7 +41,7 @@ public class ModuleScreen extends Application {
         back.setPrefSize(100, 50);
 
         ComboBox<String> dropdown = new ComboBox<>();
-        dropdown.getItems().addAll("Option 1", "Option 2", "Option 3");
+        modules.stream().map(Module::getTitel).forEach(dropdown.getItems()::add);
         dropdown.getSelectionModel().selectFirst();
         dropdown.setMaxWidth(Double.MAX_VALUE);
 
@@ -69,5 +85,9 @@ public class ModuleScreen extends Application {
                 ex.printStackTrace();
             }
         });
+    }
+
+    public void populateDrowDown(ComboBox<String> comboBox) {
+
     }
 }

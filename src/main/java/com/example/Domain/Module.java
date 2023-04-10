@@ -15,6 +15,10 @@ public class Module {
         this.titel = titel;
     }
 
+    public Module(String titel) {
+        this.titel = titel;
+    }
+
     public String getVersie() {
         return this.versie;
     }
