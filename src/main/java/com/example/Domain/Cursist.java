@@ -10,18 +10,22 @@ public class Cursist {
     private String emailAdres;
     private String naam;
     private Date geboorteDatum;
-    private Adres adres;
+    private String adres;
     private int cursistid;
-    private Geslacht geslacht;
+    private String geslacht;
     private List<Cursus> cursus;
 
-    public Cursist(String emailAdres, String naam, Date geboorteDatum, Adres adres, int cursistid, Geslacht geslacht) {
+    public Cursist(String emailAdres, String naam, Date geboorteDatum, String adres, int cursistid, String geslacht) {
         this.emailAdres = emailAdres;
         this.naam = naam;
         this.geboorteDatum = geboorteDatum;
         this.adres = adres;
         this.geslacht = geslacht;
         this.cursus = new ArrayList<>();
+    }
+
+    public Cursist(String naam) {
+        this.naam = naam;
     }
 
     public String getEmailAdres() {
@@ -48,13 +52,13 @@ public class Cursist {
         this.geboorteDatum = geboorteDatum;
     }
 
-    public Adres getAdres() {
-        return this.adres;
-    }
+    // public Adres getAdres() {
+    // return this.adres;
+    // }
 
-    public void setAdres(Adres adres) {
-        this.adres = adres;
-    }
+    // public void setAdres(Adres adres) {
+    // this.adres = adres;
+    // }
 
     public int getCursistid() {
         return this.cursistid;
@@ -64,13 +68,13 @@ public class Cursist {
         this.cursistid = cursistid;
     }
 
-    public Geslacht getGeslacht() {
-        return this.geslacht;
-    }
+    // public Geslacht getGeslacht() {
+    // return this.geslacht;
+    // }
 
-    public void setGeslacht(Geslacht geslacht) {
-        this.geslacht = geslacht;
-    }
+    // public void setGeslacht(Geslacht geslacht) {
+    // this.geslacht = geslacht;
+    // }
 
     public List<Cursus> getCursus() {
         return this.cursus;

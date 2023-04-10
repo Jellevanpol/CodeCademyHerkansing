@@ -8,7 +8,7 @@ public class DatabaseConnection {
 
     private static final String URL = "jdbc:sqlserver://aei-sql2.avans.nl:1443;databaseName=Peppernuts";
     private static final String USERNAME = "pepper";
-    private static final String PASSWORD = "Welkom01";
+    private static final String PASSWORD = "Welkom01!";
     private Connection connection;
 
     public DatabaseConnection() throws SQLException {

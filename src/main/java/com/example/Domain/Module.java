@@ -5,12 +5,14 @@ public class Module {
     private String naamContact;
     private String emailContact;
     private int volgNummer;
+    private String titel;
 
-    public Module(String versie, String naamContact, String emailContact, int volgNummer) {
+    public Module(String versie, String naamContact, String emailContact, int volgNummer, String titel) {
         this.versie = versie;
         this.naamContact = naamContact;
         this.emailContact = emailContact;
         this.volgNummer = volgNummer;
+        this.titel = titel;
     }
 
     public String getVersie() {
@@ -19,6 +21,14 @@ public class Module {
 
     public void setVersie(String versie) {
         this.versie = versie;
+    }
+
+    public String getTitel() {
+        return this.titel;
+    }
+
+    public void setTitel(String titel) {
+        this.titel = titel;
     }
 
     public String getNaamContact() {

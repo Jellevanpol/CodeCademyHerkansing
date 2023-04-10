@@ -24,6 +24,11 @@ public class Cursus {
         this.cursist = cursist;
     }
 
+    public Cursus(String cursusNaam, List<Cursist> cursist) {
+        this.cursusNaam = cursusNaam;
+        this.cursist = cursist;
+    }
+
     public String getCursusNaam() {
         return this.cursusNaam;
     }

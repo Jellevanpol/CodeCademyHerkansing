@@ -1,7 +1,7 @@
 package com.example.Domain.Enumerations;
 
 public enum Geslacht {
-    Man,
-    Vrouw,
-    Ander
+    man,
+    vrouw,
+    anders
 }
