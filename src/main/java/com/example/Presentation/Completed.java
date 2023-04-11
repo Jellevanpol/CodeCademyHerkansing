@@ -27,6 +27,7 @@ import javafx.stage.Stage;
 
 public class Completed extends Application {
 
+    private int behaald = 0;
     private DatabaseConnection databaseConnection;
     private List<Cursus> cursussen;
     private CursusDAO cursusDAO;
@@ -37,6 +38,7 @@ public class Completed extends Application {
         cursusDAO = new CursusDAOImpl(databaseConnection);
         cursistDAO = new CursistDAOImpl(databaseConnection);
         cursussen = cursusDAO.getAllCursussen();
+        this.behaald = 0;
     }
 
     @Override
@@ -51,8 +53,8 @@ public class Completed extends Application {
 
         Text text = new Text();
         if(dropdown.getValue() != null){
-            ObservableList<Cursist> cursisten = cursistDAO.getCompletedCursisten();
-            text.setText("Aantal cursisten die de cursus behaald hebben: " + cursisten);
+            behaald = cursistDAO.getCompletedCursisten();
+            text.setText("Aantal cursisten die de cursus behaald hebben: " + behaald);
         }
 
         VBox vboxText = new VBox(text);

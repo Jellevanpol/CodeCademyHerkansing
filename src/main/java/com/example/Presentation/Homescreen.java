@@ -17,7 +17,7 @@ public class Homescreen extends Application {
         HBox hbox = new HBox();
         Button module = new Button("Progress module");
         Button student = new Button("Progress student");
-        Button top3 = new Button("Top 3 modules");
+        Button top3 = new Button("Top 3 webcasts");
         Button completed = new Button("Completed modules");
 
         Insets insetsButtons = new Insets(10);

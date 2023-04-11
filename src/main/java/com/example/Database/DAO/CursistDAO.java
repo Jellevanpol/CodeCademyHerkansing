@@ -8,5 +8,5 @@ import javafx.collections.ObservableList;
 public interface CursistDAO {
      List<Cursist> getAllCursisten();
 
-     ObservableList<Cursist> getCompletedCursisten();
+     int getCompletedCursisten();
 }

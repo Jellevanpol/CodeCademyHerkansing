@@ -48,9 +48,8 @@ public class CursistDAOImpl implements CursistDAO {
     }
 
     @Override
-    public ObservableList<Cursist> getCompletedCursisten() {
-        ObservableList<Cursist> cursisten = FXCollections.observableArrayList();
-
+    public int getCompletedCursisten() {
+        int behaaldeCursisten = 0;
         String query = "SELECT APPROX_COUNT_DISTINCT(c.cursistID) AS Behaald " +
                 "FROM Cursist c " +
                 "JOIN [Cursist_Content-item] cci ON cci.CursistId = c.CursistId " +
@@ -65,15 +64,13 @@ public class CursistDAOImpl implements CursistDAO {
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
-                String behaaldeCursisten = resultSet.getString("Naam");
-                Cursist cursist = new Cursist(behaaldeCursisten);
-                cursisten.add(cursist);
+                behaaldeCursisten = resultSet.getInt("Behaald");
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return cursisten;
+        return behaaldeCursisten;
     }
 }
