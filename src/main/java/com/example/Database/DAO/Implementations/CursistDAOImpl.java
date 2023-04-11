@@ -13,6 +13,9 @@ import com.example.Database.DAO.CursistDAO;
 import com.example.Domain.Cursist;
 import com.example.Domain.Enumerations.Geslacht;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 public class CursistDAOImpl implements CursistDAO {
 
     private final Connection connection;
@@ -34,6 +37,36 @@ public class CursistDAOImpl implements CursistDAO {
             while (resultSet.next()) {
                 String naam = resultSet.getString("Naam");
                 Cursist cursist = new Cursist(naam);
+                cursisten.add(cursist);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return cursisten;
+    }
+
+    @Override
+    public ObservableList<Cursist> getCompletedCursisten() {
+        ObservableList<Cursist> cursisten = FXCollections.observableArrayList();
+
+        String query = "SELECT APPROX_COUNT_DISTINCT(c.cursistID) AS Behaald " +
+                "FROM Cursist c " +
+                "JOIN [Cursist_Content-item] cci ON cci.CursistId = c.CursistId " +
+                "JOIN [Content-Item] ci ON ci.ContentID = cci.ContentId " +
+                "JOIN Module m ON m.contentID = ci.ContentID " +
+                "WHERE NOT EXISTS (SELECT * " +
+                "FROM Module " +
+                "WHERE Voortgang != 100) ";
+
+        try {
+            PreparedStatement statement = connection.prepareStatement(query);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                String behaald = resultSet.getString("Naam");
+                Cursist cursist = new Cursist(behaald);
                 cursisten.add(cursist);
             }
 

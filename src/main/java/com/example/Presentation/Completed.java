@@ -1,6 +1,19 @@
 package com.example.Presentation;
 
+import java.sql.SQLException;
+import java.util.List;
+
+import com.example.Database.DatabaseConnection;
+import com.example.Database.DAO.CursistDAO;
+import com.example.Database.DAO.CursusDAO;
+import com.example.Database.DAO.Implementations.CursistDAOImpl;
+import com.example.Database.DAO.Implementations.CursusDAOImpl;
+import com.example.Database.DAO.Implementations.ModuleDAOImpl;
+import com.example.Domain.Cursist;
+import com.example.Domain.Cursus;
+
 import javafx.application.Application;
+import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -12,17 +25,34 @@ import javafx.stage.Stage;
 
 public class Completed extends Application {
 
+    private DatabaseConnection databaseConnection;
+    private List<Cursus> cursussen;
+    private CursusDAO cursusDAO;
+    private CursistDAO cursistDAO;
+
+    public Completed() throws SQLException {
+        databaseConnection = new DatabaseConnection();
+        cursusDAO = new CursusDAOImpl(databaseConnection);
+        cursistDAO = new CursistDAOImpl(databaseConnection);
+        cursussen = cursusDAO.getAllCursussen();
+    }
+
     @Override
     public void start(Stage stage) throws Exception {
         Button back = new Button("Back");
         back.setPrefSize(100, 50);
 
         ComboBox<String> dropdown = new ComboBox<>();
-        dropdown.getItems().addAll("Option 1", "Option 2", "Option 3");
+        cursussen.stream().map(Cursus::getCursusNaam).forEach(dropdown.getItems()::add);
         dropdown.getSelectionModel().selectFirst();
+        dropdown.setMaxWidth(Double.MAX_VALUE);
 
-        Text behaald = new Text("Behaald...");
+        Text behaald = new Text();
 
+        if (dropdown.getValue() != null) {
+            ObservableList<Cursist> cursisten = cursistDAO.getCompletedCursisten();
+            behaald.setText(getStringRepresentation(cursisten));
+        }
 
         VBox vboxText = new VBox(behaald);
         vboxText.setAlignment(Pos.CENTER);
@@ -51,6 +81,13 @@ public class Completed extends Application {
 
     public static void main(String[] args) {
         launch(Homescreen.class);
+    }
+
+    private String getStringRepresentation(ObservableList<Cursist> cursisten) {
+        StringBuilder sb = new StringBuilder();
+            sb.append("Aantal cursisten die de cursus hebben behaald: ");
+            sb.append(cursisten.toString());
+        return sb.toString();
     }
 
 }
