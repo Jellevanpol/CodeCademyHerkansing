@@ -8,7 +8,6 @@ import com.example.Database.DAO.CursistDAO;
 import com.example.Database.DAO.CursusDAO;
 import com.example.Database.DAO.Implementations.CursistDAOImpl;
 import com.example.Database.DAO.Implementations.CursusDAOImpl;
-import com.example.Database.DAO.Implementations.ModuleDAOImpl;
 import com.example.Domain.Cursist;
 import com.example.Domain.Cursus;
 
@@ -18,6 +17,9 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -47,14 +49,13 @@ public class Completed extends Application {
         dropdown.getSelectionModel().selectFirst();
         dropdown.setMaxWidth(Double.MAX_VALUE);
 
-        Text behaald = new Text();
-
-        if (dropdown.getValue() != null) {
+        Text text = new Text();
+        if(dropdown.getValue() != null){
             ObservableList<Cursist> cursisten = cursistDAO.getCompletedCursisten();
-            behaald.setText(getStringRepresentation(cursisten));
+            text.setText("Aantal cursisten die de cursus behaald hebben: " + cursisten);
         }
 
-        VBox vboxText = new VBox(behaald);
+        VBox vboxText = new VBox(text);
         vboxText.setAlignment(Pos.CENTER);
 
         VBox vbox = new VBox(10, dropdown, vboxText);
@@ -82,12 +83,4 @@ public class Completed extends Application {
     public static void main(String[] args) {
         launch(Homescreen.class);
     }
-
-    private String getStringRepresentation(ObservableList<Cursist> cursisten) {
-        StringBuilder sb = new StringBuilder();
-            sb.append("Aantal cursisten die de cursus hebben behaald: ");
-            sb.append(cursisten.toString());
-        return sb.toString();
-    }
-
 }

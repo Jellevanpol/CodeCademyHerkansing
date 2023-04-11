@@ -65,8 +65,8 @@ public class CursistDAOImpl implements CursistDAO {
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
-                String behaald = resultSet.getString("Naam");
-                Cursist cursist = new Cursist(behaald);
+                String behaaldeCursisten = resultSet.getString("Naam");
+                Cursist cursist = new Cursist(behaaldeCursisten);
                 cursisten.add(cursist);
             }
 
