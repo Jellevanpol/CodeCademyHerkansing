@@ -72,16 +72,16 @@ public class Homescreen extends Application {
                 ex.printStackTrace();
             }
         });
-        top3.setOnAction(e ->{
-            try{
+        top3.setOnAction(e -> {
+            try {
                 top3 top3Screen = new top3();
                 top3Screen.start(stage);
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
         });
-        completed.setOnAction(e ->{
-            try{
+        completed.setOnAction(e -> {
+            try {
                 Completed completedScreen = new Completed();
                 completedScreen.start(stage);
             } catch (Exception ex) {

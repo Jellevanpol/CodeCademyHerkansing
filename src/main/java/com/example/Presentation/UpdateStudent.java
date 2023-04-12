@@ -107,7 +107,7 @@ public class UpdateStudent extends Application {
 
         HBox hbox = new HBox(5, question, awnser);
         hbox.setMaxWidth(300);
-        hbox.setPadding(new Insets(0,0,20,0));
+        hbox.setPadding(new Insets(0, 0, 20, 0));
         hbox.setAlignment(Pos.CENTER);
 
         VBox vbox = new VBox(7, hbox, nameText, inputName, geboorteDatumText, inputDatum, adresText, inputAdres,
