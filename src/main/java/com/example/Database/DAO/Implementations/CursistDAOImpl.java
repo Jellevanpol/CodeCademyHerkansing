@@ -70,12 +70,11 @@ public class CursistDAOImpl implements CursistDAO {
     }
 
     @Override
-    public boolean createCursist(String naam, String geboorteDatum, String adres, String woonplaats, String land,
+    public void createCursist(String naam, String geboorteDatum, String adres, String woonplaats, String land,
             String emailAdres, String geslacht) {
 
         String query = "INSERT INTO Cursist(Naam, GeboorteDatum, Adres, Woonplaats, Land, EmailAdres, Geslacht) " +
-                "VALUES(?, ?, ?, ?, ?, ? , ?) " +
-                "WHERE EmailAdres LIKE '%@%.%.%' ";
+                "VALUES(?, ?, ?, ?, ?, ? , ?) ";
 
         try {
             PreparedStatement statement = connection.prepareStatement(query);
@@ -91,19 +90,21 @@ public class CursistDAOImpl implements CursistDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-        return true;
     }
 
     @Override
-    public boolean deleteCursist(String naam) {
+    public boolean deleteCursist(String emailAdres) {
         String query = "DELETE FROM cursist " +
-                "WHERE Naam = ? ";
+                "WHERE EmailAdres = ? ";
 
         try {
             PreparedStatement statement = connection.prepareStatement(query);
-            statement.setString(1, naam);
-            ResultSet resultSet = statement.executeQuery();
+            statement.setString(1, emailAdres);
+            int rowsDeleted = statement.executeUpdate(); // use executeUpdate instead of executeQuery
+
+            if (rowsDeleted == 0) {
+                return false; // return false if no rows are affected
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -113,15 +114,15 @@ public class CursistDAOImpl implements CursistDAO {
     }
 
     @Override
-    public boolean updateCursist(String naam, String geboorteDatum, String adres, String woonplaats, String land,
+    public void updateCursist(String naam, String geboorteDatum, String adres, String woonplaats, String land,
             String emailAdres, String geslacht) {
         String query = "UPDATE cursist " +
                 "SET Naam = ?,  " +
-                "GeboorteDatum = ? ," +
-                "Adres = ? , " +
-                "Woonplaats = ? , " +
-                "Land = ? , " +
-                "EmailAdres = ? , " +
+                "GeboorteDatum = ?, " +
+                "Adres = ?, " +
+                "Woonplaats = ?, " +
+                "Land = ?, " +
+                "EmailAdres = ?, " +
                 "Geslacht = ? " +
                 "WHERE Naam = ? ";
 
@@ -140,7 +141,5 @@ public class CursistDAOImpl implements CursistDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-        return true;
     }
 }

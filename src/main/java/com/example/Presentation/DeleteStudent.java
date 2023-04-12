@@ -1,5 +1,11 @@
 package com.example.Presentation;
 
+import java.sql.SQLException;
+
+import com.example.Database.DatabaseConnection;
+import com.example.Database.DAO.CursistDAO;
+import com.example.Database.DAO.Implementations.CursistDAOImpl;
+
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -12,20 +18,44 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class DeleteStudent extends Application{
+    
+    private DatabaseConnection databaseConnection;
+    private CursistDAO cursistDAO;
+
+    public DeleteStudent() throws SQLException {
+        databaseConnection = new DatabaseConnection();
+        cursistDAO = new CursistDAOImpl(databaseConnection);
+    }
+
     @Override
     public void start(Stage stage) throws Exception {
-        Text name = new Text("Naam");
+        Text emailAdresText = new Text("Email adres");
+        Text error = new Text();
 
-        TextField inputName = new TextField();
+        TextField inputEmail = new TextField();
 
         Button back = new Button("Back");
         back.setPrefSize(100, 50);
 
-        Button add = new Button("Delete student");
-        add.setPrefSize(120, 40);
-        add.setDisable(true);
-        add.setPadding(new Insets(10, 10, 10, 10));
+        Button delete = new Button("Delete student");
+        delete.setPrefSize(120, 40);
+        delete.setPadding(new Insets(10, 10, 10, 10));
         
+        delete.setOnAction(e -> {
+            try {
+                String emailAdres = inputEmail.getText();
+
+                if (cursistDAO.deleteCursist(emailAdres) == false) {
+                    error.setText("Email niet gevonden!");
+                } else {
+                        cursistDAO.deleteCursist(emailAdres);
+                        StudentScreen studentscreen = new StudentScreen();
+                        studentscreen.start(stage);
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        });
 
         back.setOnAction(e -> {
             try {
@@ -36,7 +66,7 @@ public class DeleteStudent extends Application{
             }
         });
 
-        VBox vbox = new VBox(7, name, inputName, add);
+        VBox vbox = new VBox(7, emailAdresText, inputEmail, error, delete);
         vbox.setMaxWidth(300);
         vbox.setAlignment(Pos.CENTER);
 
