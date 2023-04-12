@@ -94,7 +94,8 @@ public class AddStudent extends Application {
 
         VBox vbox = new VBox(7, nameText, inputName, geboorteDatumText, inputDatum, adresText, inputAdres,
                 woonplaatsText,
-                inputWoonplaats, landText, inputLand, emailAdresText, inputEmail, geslachtText, inputGeslacht, error, add);
+                inputWoonplaats, landText, inputLand, emailAdresText, inputEmail, geslachtText, inputGeslacht, error,
+                add);
         vbox.setMaxWidth(300);
         vbox.setAlignment(Pos.CENTER);
 
