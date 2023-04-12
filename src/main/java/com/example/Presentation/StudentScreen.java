@@ -86,8 +86,8 @@ public class StudentScreen extends Application {
         Button updateStudent = new Button("Edit student");
 
         // createStudent.setDisable(true);
-        deleteStudent.setDisable(true);
-        updateStudent.setDisable(true);
+        // deleteStudent.setDisable(true);
+        // updateStudent.setDisable(true);
 
         comboStudent.valueProperty().addListener((obs, oldVal, newVal) -> {
             // Enable the ComboBox and populate it with the modules for the selected cursist
@@ -98,8 +98,26 @@ public class StudentScreen extends Application {
 
         createStudent.setOnAction(e -> {
             try {
-                addStudent addStudentScreen = new addStudent();
+                AddStudent addStudentScreen = new AddStudent();
                 addStudentScreen.start(stage);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        });
+        
+        deleteStudent.setOnAction(e -> {
+            try {
+                DeleteStudent deleteStudentScreen = new DeleteStudent();
+                deleteStudentScreen.start(stage);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        });
+        
+        updateStudent.setOnAction(e -> {
+            try {
+                UpdateStudent updateStudentScreen = new UpdateStudent();
+                updateStudentScreen.start(stage);
             } catch (Exception ex) {
                 ex.printStackTrace();
             }

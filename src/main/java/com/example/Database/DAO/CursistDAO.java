@@ -11,4 +11,6 @@ public interface CursistDAO {
      int getCompletedCursisten();
 
      boolean createCursist(String naam, String geboorteDatum, String adres, String woonplaats, String land, String emailAdres, String geslacht);
+     boolean deleteCursist(String naam);
+     boolean updateCursist(String naam, String geboorteDatum, String adres, String woonplaats, String land, String emailAdres, String geslacht);
 }

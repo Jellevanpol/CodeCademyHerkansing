@@ -70,10 +70,11 @@ public class CursistDAOImpl implements CursistDAO {
     }
 
     @Override
-    public boolean createCursist(String naam, String geboorteDatum, String adres, String woonplaats, String land, String emailAdres, String geslacht) {
+    public boolean createCursist(String naam, String geboorteDatum, String adres, String woonplaats, String land,
+            String emailAdres, String geslacht) {
 
         String query = "INSERT INTO Cursist(Naam, GeboorteDatum, Adres, Woonplaats, Land, EmailAdres, Geslacht) " +
-                "VALUES(?, ?, ?, ?, ?, ? , ?) " + 
+                "VALUES(?, ?, ?, ?, ?, ? , ?) " +
                 "WHERE EmailAdres LIKE '%@%.%.%' ";
 
         try {
@@ -85,6 +86,55 @@ public class CursistDAOImpl implements CursistDAO {
             statement.setString(5, land);
             statement.setString(6, emailAdres);
             statement.setString(7, geslacht);
+            ResultSet resultSet = statement.executeQuery();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return true;
+    }
+
+    @Override
+    public boolean deleteCursist(String naam) {
+        String query = "DELETE FROM cursist " +
+                "WHERE Naam = ? ";
+
+        try {
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, naam);
+            ResultSet resultSet = statement.executeQuery();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return true;
+    }
+
+    @Override
+    public boolean updateCursist(String naam, String geboorteDatum, String adres, String woonplaats, String land,
+            String emailAdres, String geslacht) {
+        String query = "UPDATE cursist " +
+                "SET Naam = ?,  " +
+                "GeboorteDatum = ? ," +
+                "Adres = ? , " +
+                "Woonplaats = ? , " +
+                "Land = ? , " +
+                "EmailAdres = ? , " +
+                "Geslacht = ? " +
+                "WHERE Naam = ? ";
+
+        try {
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, naam);
+            statement.setString(2, geboorteDatum);
+            statement.setString(3, adres);
+            statement.setString(4, woonplaats);
+            statement.setString(5, land);
+            statement.setString(6, emailAdres);
+            statement.setString(7, geslacht);
+            statement.setString(8, naam);
             ResultSet resultSet = statement.executeQuery();
 
         } catch (SQLException e) {

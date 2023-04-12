@@ -11,29 +11,17 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-public class AddStudent extends Application{
+public class DeleteStudent extends Application{
     @Override
     public void start(Stage stage) throws Exception {
         Text name = new Text("Naam");
-        Text geboorteDatum = new Text("Geboorte datum");
-        Text adres = new Text("Adres");
-        Text woonplaats = new Text("Woonplaats");
-        Text land = new Text("Land");
-        Text emailAdres = new Text("Email adres (LET OP: gebruik een correct format!)");
-        Text geslacht = new Text("Man, vrouw of anders");
 
         TextField inputName = new TextField();
-        TextField inputDatum = new TextField();
-        TextField inputAdres = new TextField();
-        TextField inputWoonplaats = new TextField();
-        TextField inputLand = new TextField();
-        TextField inputEmail = new TextField();
-        TextField inputGeslacht = new TextField();
 
         Button back = new Button("Back");
         back.setPrefSize(100, 50);
 
-        Button add = new Button("Add student");
+        Button add = new Button("Delete student");
         add.setPrefSize(120, 40);
         add.setDisable(true);
         add.setPadding(new Insets(10, 10, 10, 10));
@@ -48,8 +36,7 @@ public class AddStudent extends Application{
             }
         });
 
-        VBox vbox = new VBox(7, name, inputName, geboorteDatum, inputDatum, adres, inputAdres, woonplaats,
-                inputWoonplaats, land, inputLand, emailAdres, inputEmail, geslacht, inputGeslacht, add);
+        VBox vbox = new VBox(7, name, inputName, add);
         vbox.setMaxWidth(300);
         vbox.setAlignment(Pos.CENTER);
 
@@ -66,5 +53,4 @@ public class AddStudent extends Application{
     public static void main(String[] args) {
         launch(AddStudent.class);
     }
-
 }

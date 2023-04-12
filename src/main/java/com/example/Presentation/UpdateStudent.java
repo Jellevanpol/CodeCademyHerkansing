@@ -11,7 +11,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-public class AddStudent extends Application{
+public class UpdateStudent extends Application{
     @Override
     public void start(Stage stage) throws Exception {
         Text name = new Text("Naam");
@@ -33,7 +33,7 @@ public class AddStudent extends Application{
         Button back = new Button("Back");
         back.setPrefSize(100, 50);
 
-        Button add = new Button("Add student");
+        Button add = new Button("Update student");
         add.setPrefSize(120, 40);
         add.setDisable(true);
         add.setPadding(new Insets(10, 10, 10, 10));
@@ -66,5 +66,4 @@ public class AddStudent extends Application{
     public static void main(String[] args) {
         launch(AddStudent.class);
     }
-
 }
