@@ -16,6 +16,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -41,6 +42,7 @@ public class UpdateStudent extends Application {
         Text emailAdresText = new Text("Email adres (LET OP: gebruik een correct format!)");
         Text geslachtText = new Text("Man, vrouw of anders");
         Text error = new Text();
+        error.setFill(Color.RED);
         Text question = new Text("Welke cursist wilt u updaten?");
 
         TextField inputName = new TextField();
@@ -53,15 +55,8 @@ public class UpdateStudent extends Application {
         TextField awnser = new TextField();
         awnser.setPromptText("Email adres");
         awnser.setFocusTraversable(false);
-
-        inputName.setDisable(true);
-        inputDatum.setDisable(true);
-        inputAdres.setDisable(true);
-        inputWoonplaats.setDisable(true);
-        inputLand.setDisable(true);
-        inputEmail.setDisable(true);
-        inputGeslacht.setDisable(true);
-
+        setFieldsDisabled(true, inputName, inputDatum, inputAdres, inputWoonplaats, inputLand, inputEmail,
+                inputGeslacht);
         Button back = new Button("Back");
         back.setPrefSize(100, 50);
 
@@ -70,10 +65,20 @@ public class UpdateStudent extends Application {
         update.setDisable(true);
         update.setPadding(new Insets(10, 10, 10, 10));
 
-        update.setOnAction(e -> {
-            // if(awnser.getText() == true){
+        awnser.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (cursistDAO.checkEmailCursist(newValue)) {
+                setFieldsDisabled(false, inputName, inputDatum, inputAdres, inputWoonplaats, inputLand, inputEmail,
+                        inputGeslacht);
+                error.setText("");
+            } else {
+                setFieldsDisabled(true, inputName, inputDatum, inputAdres, inputWoonplaats, inputLand, inputEmail,
+                        inputGeslacht);
+                error.setText("User niet gevonden!");
+            }
+        });
 
-            // }
+        update.setOnAction(e -> {
+
             try {
                 String name = inputName.getText();
                 String geboorteDatum = inputDatum.getText();
@@ -86,9 +91,11 @@ public class UpdateStudent extends Application {
                 if (name.isEmpty() || geboorteDatum.isEmpty() || adres.isEmpty() || woonplaats.isEmpty()
                         || land.isEmpty() || emailAdres.isEmpty() || geslacht.isEmpty()) {
                     error.setText("Een of meerdere velden zijn niet gevuld!");
+                    update.setDisable(true);
                 } else {
                     if (emailCheck.correctEmail(emailAdres)) {
-                        cursistDAO.createCursist(name, geboorteDatum, adres, woonplaats, land, emailAdres, geslacht);
+                        cursistDAO.updateCursist(name, geboorteDatum, adres, woonplaats, land, emailAdres, geslacht);
+                        update.setDisable(false);
                         StudentScreen studentscreen = new StudentScreen();
                         studentscreen.start(stage);
                     }
@@ -128,9 +135,50 @@ public class UpdateStudent extends Application {
         Scene scene = new Scene(root, 800, 600);
         stage.setScene(scene);
         stage.show();
+
+        update.setDisable(true);
+        inputName.textProperty().addListener((observable, oldValue, newValue) -> {
+            update.setDisable(isAnyTextFieldEmpty(inputName, inputDatum, inputAdres, inputWoonplaats, inputLand,
+                    inputEmail, inputGeslacht));
+        });
+        inputDatum.textProperty().addListener((observable, oldValue, newValue) -> {
+            update.setDisable(isAnyTextFieldEmpty(inputName, inputDatum, inputAdres, inputWoonplaats, inputLand,
+                    inputEmail, inputGeslacht));
+        });
+        inputAdres.textProperty().addListener((observable, oldValue, newValue) -> {
+            update.setDisable(isAnyTextFieldEmpty(inputName, inputDatum, inputAdres, inputWoonplaats, inputLand,
+                    inputEmail, inputGeslacht));
+        });
+        inputWoonplaats.textProperty().addListener((observable, oldValue, newValue) -> {
+            update.setDisable(isAnyTextFieldEmpty(inputName, inputDatum, inputAdres, inputWoonplaats, inputLand,
+                    inputEmail, inputGeslacht));
+        });
+        inputLand.textProperty().addListener((observable, oldValue, newValue) -> {
+            update.setDisable(isAnyTextFieldEmpty(inputName, inputDatum, inputAdres, inputWoonplaats, inputLand,
+                    inputEmail, inputGeslacht));
+        });
+        inputEmail.textProperty().addListener((observable, oldValue, newValue) -> {
+            update.setDisable(isAnyTextFieldEmpty(inputName, inputDatum, inputAdres, inputWoonplaats, inputLand,
+                    inputEmail, inputGeslacht));
+        });
+        inputGeslacht.textProperty().addListener((observable, oldValue, newValue) -> {
+            update.setDisable(isAnyTextFieldEmpty(inputName, inputDatum, inputAdres, inputWoonplaats, inputLand,
+                    inputEmail, inputGeslacht));
+        });
     }
 
-    public static void main(String[] args) {
-        launch(UpdateStudent.class);
+    private void setFieldsDisabled(boolean disable, TextField... fields) {
+        for (TextField field : fields) {
+            field.setDisable(disable);
+        }
+    }
+
+    private boolean isAnyTextFieldEmpty(TextField... fields) {
+        for (TextField field : fields) {
+            if (field.getText().isEmpty()) {
+                return true;
+            }
+        }
+        return false;
     }
 }

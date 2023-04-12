@@ -124,22 +124,44 @@ public class CursistDAOImpl implements CursistDAO {
                 "Land = ?, " +
                 "EmailAdres = ?, " +
                 "Geslacht = ? " +
-                "WHERE Naam = ? ";
+                "WHERE EmailAdres = ? ";
 
         try {
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, naam);
-            statement.setString(2, geboorteDatum);
+            statement.setDate(2, java.sql.Date.valueOf(geboorteDatum));
             statement.setString(3, adres);
             statement.setString(4, woonplaats);
             statement.setString(5, land);
             statement.setString(6, emailAdres);
             statement.setString(7, geslacht);
-            statement.setString(8, naam);
-            ResultSet resultSet = statement.executeQuery();
+            statement.setString(8, emailAdres);
+            int rowsAffected = statement.executeUpdate();
+            System.out.println(rowsAffected + " row(s) affected");
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public boolean checkEmailCursist(String emailAdres) {
+        String query = "SELECT EmailAdres FROM cursist " +
+                "WHERE EmailAdres = ? ";
+
+        try {
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, emailAdres);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                return true;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false;
     }
 }
