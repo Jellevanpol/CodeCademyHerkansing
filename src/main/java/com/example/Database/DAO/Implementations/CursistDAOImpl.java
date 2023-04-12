@@ -5,16 +5,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import com.example.Database.DatabaseConnection;
 import com.example.Database.DAO.CursistDAO;
 import com.example.Domain.Cursist;
-import com.example.Domain.Enumerations.Geslacht;
-
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 
 public class CursistDAOImpl implements CursistDAO {
 
@@ -72,5 +67,30 @@ public class CursistDAOImpl implements CursistDAO {
         }
 
         return behaaldeCursisten;
+    }
+
+    @Override
+    public boolean createCursist(String naam, String geboorteDatum, String adres, String woonplaats, String land, String emailAdres, String geslacht) {
+
+        String query = "INSERT INTO Cursist(Naam, GeboorteDatum, Adres, Woonplaats, Land, EmailAdres, Geslacht) " +
+                "VALUES(?, ?, ?, ?, ?, ? , ?) " + 
+                "WHERE EmailAdres LIKE '%@%.%.%' ";
+
+        try {
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, naam);
+            statement.setString(2, geboorteDatum);
+            statement.setString(3, adres);
+            statement.setString(4, woonplaats);
+            statement.setString(5, land);
+            statement.setString(6, emailAdres);
+            statement.setString(7, geslacht);
+            ResultSet resultSet = statement.executeQuery();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return true;
     }
 }

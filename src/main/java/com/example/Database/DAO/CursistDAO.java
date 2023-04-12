@@ -9,4 +9,6 @@ public interface CursistDAO {
      List<Cursist> getAllCursisten();
 
      int getCompletedCursisten();
+
+     boolean createCursist(String naam, String geboorteDatum, String adres, String woonplaats, String land, String emailAdres, String geslacht);
 }

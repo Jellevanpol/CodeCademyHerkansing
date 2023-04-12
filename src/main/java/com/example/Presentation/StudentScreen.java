@@ -16,6 +16,7 @@ import com.example.Domain.Module;
 
 import javafx.application.Application;
 import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -24,6 +25,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -79,7 +81,34 @@ public class StudentScreen extends Application {
             }
         });
 
-        VBox vBox = new VBox(10, comboStudent, comboCourse, tableView);
+        Button createStudent = new Button("Add student");
+        Button deleteStudent = new Button("Delete student");
+        Button updateStudent = new Button("Edit student");
+
+        // createStudent.setDisable(true);
+        deleteStudent.setDisable(true);
+        updateStudent.setDisable(true);
+
+        comboStudent.valueProperty().addListener((obs, oldVal, newVal) -> {
+            // Enable the ComboBox and populate it with the modules for the selected cursist
+            createStudent.setDisable(false);
+            deleteStudent.setDisable(false);
+            updateStudent.setDisable(false);
+        });
+
+        createStudent.setOnAction(e -> {
+            try {
+                addStudent addStudentScreen = new addStudent();
+                addStudentScreen.start(stage);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        });
+
+        HBox hbox = new HBox(10, createStudent, deleteStudent, updateStudent);
+        hbox.setAlignment(Pos.CENTER);
+
+        VBox vBox = new VBox(10, comboStudent, comboCourse, tableView, hbox);
         vBox.setAlignment(Pos.CENTER);
 
         BorderPane root = new BorderPane();
