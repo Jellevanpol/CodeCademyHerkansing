@@ -16,7 +16,6 @@ import com.example.Domain.Module;
 
 import javafx.application.Application;
 import javafx.collections.ObservableList;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -98,7 +97,7 @@ public class StudentScreen extends Application {
 
         createStudent.setOnAction(e -> {
             try {
-                AddStudent addStudentScreen = new AddStudent();
+                addStudent addStudentScreen = new addStudent();
                 addStudentScreen.start(stage);
             } catch (Exception ex) {
                 ex.printStackTrace();

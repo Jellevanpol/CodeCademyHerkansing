@@ -1,11 +1,9 @@
 package com.example.Presentation;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javafx.application.Application;
-import javafx.beans.Observable;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
