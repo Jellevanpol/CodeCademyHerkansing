@@ -71,9 +71,9 @@ public class UpdateStudent extends Application {
         update.setPadding(new Insets(10, 10, 10, 10));
 
         update.setOnAction(e -> {
-            if(awnser.getText() == true){
-                
-            }
+            // if(awnser.getText() == true){
+
+            // }
             try {
                 String name = inputName.getText();
                 String geboorteDatum = inputDatum.getText();

@@ -16,5 +16,4 @@ public interface CursistDAO {
      void updateCursist(String naam, String geboorteDatum, String adres, String woonplaats, String land,
                String emailAdres, String geslacht);
 
-     void 
 }
