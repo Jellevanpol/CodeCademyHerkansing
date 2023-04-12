@@ -103,7 +103,7 @@ public class StudentScreen extends Application {
                 ex.printStackTrace();
             }
         });
-        
+
         deleteStudent.setOnAction(e -> {
             try {
                 DeleteStudent deleteStudentScreen = new DeleteStudent();
@@ -112,7 +112,7 @@ public class StudentScreen extends Application {
                 ex.printStackTrace();
             }
         });
-        
+
         updateStudent.setOnAction(e -> {
             try {
                 UpdateStudent updateStudentScreen = new UpdateStudent();

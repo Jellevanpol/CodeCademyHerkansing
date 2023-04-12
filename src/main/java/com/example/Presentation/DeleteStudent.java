@@ -81,6 +81,6 @@ public class DeleteStudent extends Application{
     }
 
     public static void main(String[] args) {
-        launch(AddStudent.class);
+        launch(DeleteStudent.class);
     }
 }

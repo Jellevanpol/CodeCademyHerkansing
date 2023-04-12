@@ -131,6 +131,6 @@ public class UpdateStudent extends Application {
     }
 
     public static void main(String[] args) {
-        launch(AddStudent.class);
+        launch(UpdateStudent.class);
     }
 }
