@@ -18,12 +18,12 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-public class AddStudent extends Application {
+public class addStudent extends Application {
     private DatabaseConnection databaseConnection;
     private CursistDAO cursistDAO;
     private EmailCheck emailCheck;
 
-    public AddStudent() throws SQLException {
+    public addStudent() throws SQLException {
         databaseConnection = new DatabaseConnection();
         cursistDAO = new CursistDAOImpl(databaseConnection);
         emailCheck = new EmailCheck();
@@ -108,7 +108,7 @@ public class AddStudent extends Application {
     }
 
     public static void main(String[] args) {
-        launch(AddStudent.class);
+        launch(addStudent.class);
     }
 
 }
