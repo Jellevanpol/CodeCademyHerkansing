@@ -98,13 +98,13 @@ public class StudentScreen extends Application {
 
         createStudent.setOnAction(e -> {
             try {
-                AddStudent addStudentScreen = new AddStudent();
+                addStudent addStudentScreen = new addStudent();
                 addStudentScreen.start(stage);
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
         });
-        
+
         deleteStudent.setOnAction(e -> {
             try {
                 DeleteStudent deleteStudentScreen = new DeleteStudent();
@@ -113,7 +113,7 @@ public class StudentScreen extends Application {
                 ex.printStackTrace();
             }
         });
-        
+
         updateStudent.setOnAction(e -> {
             try {
                 UpdateStudent updateStudentScreen = new UpdateStudent();
