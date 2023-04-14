@@ -138,7 +138,7 @@ public class CursistDAOImpl implements CursistDAO {
             statement.setString(8, emailAdres);
             int rowsAffected = statement.executeUpdate();
             System.out.println(rowsAffected + " row(s) affected");
-
+                
         } catch (SQLException e) {
             e.printStackTrace();
         }
