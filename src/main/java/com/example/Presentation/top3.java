@@ -6,11 +6,18 @@ import java.util.List;
 import com.example.Database.DatabaseConnection;
 import com.example.Database.DAO.CursistDAO;
 import com.example.Database.DAO.CursusDAO;
+import com.example.Database.DAO.WebcastDAO;
 import com.example.Database.DAO.Implementations.CursistDAOImpl;
 import com.example.Database.DAO.Implementations.CursusDAOImpl;
+import com.example.Database.DAO.Implementations.WebcastDAOImpl;
 import com.example.Domain.Cursus;
+import com.example.Domain.Webcast;
 
 import javafx.application.Application;
+import javafx.collections.ObservableList;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -22,15 +29,12 @@ import javafx.stage.Stage;
 
 public class top3 extends Application {
     private DatabaseConnection databaseConnection;
-    private List<Cursus> cursussen;
-    private CursusDAO cursusDAO;
-    private CursistDAO cursistDAO;
+    private WebcastDAO webcastDAO;
+    private TableView<Module> tableView = new TableView<>();
 
     public top3() throws SQLException {
         databaseConnection = new DatabaseConnection();
-        cursusDAO = new CursusDAOImpl(databaseConnection);
-        cursistDAO = new CursistDAOImpl(databaseConnection);
-        cursussen = cursusDAO.getAllCursussen();
+        webcastDAO = new WebcastDAOImpl(databaseConnection);
     }
 
     @Override
@@ -38,19 +42,20 @@ public class top3 extends Application {
         Button back = new Button("Back");
         back.setPrefSize(100, 50);
 
-        ComboBox<String> dropdown = new ComboBox<>();
-        cursussen.stream().map(Cursus::getCursusNaam).forEach(dropdown.getItems()::add);
-        dropdown.getSelectionModel().selectFirst();
-        dropdown.setMaxWidth(Double.MAX_VALUE);
+        Text topText = new Text("The top 3 most viewed webcasts are: ");
 
-        Text nr1 = new Text("Webcast nr 1");
-        Text nr2 = new Text("Webcast nr 2");
-        Text nr3 = new Text("Webcast nr 3");
+        TableColumn<Module, String> titelColumn = new TableColumn<>("Titel");
+        titelColumn.setCellValueFactory(new PropertyValueFactory<>("titel"));
 
-        VBox vboxText = new VBox(nr1, nr2, nr3);
-        vboxText.setAlignment(Pos.CENTER);
+        TableColumn<Module, Double> progressColumn = new TableColumn<>("Aantal cursisten");
+        progressColumn.setCellValueFactory(new PropertyValueFactory<>("progress"));
 
-        VBox vbox = new VBox(10, dropdown, vboxText);
+        tableView.getColumns().setAll(titelColumn, progressColumn);
+        tableView.setMaxWidth(300);
+        tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        ObservableList<Webcast> webcasts = webcastDAO.mostViewedWebcasts();
+
+        VBox vbox = new VBox(10, topText, tableView);
         vbox.setAlignment(Pos.CENTER);
 
         back.setOnAction(e -> {

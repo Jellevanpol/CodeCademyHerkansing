@@ -30,12 +30,11 @@ public class WebcastDAOImpl implements WebcastDAO {
     public ObservableList<Webcast> mostViewedWebcasts() {
         ObservableList<Webcast> webcasts = FXCollections.observableArrayList();
 
-        String query = "SELECT m.Titel, cu.CursusNaam, Voortgang " +
-                "FROM Module m " +
-                "JOIN [Content-Item] ci on ci.ContentID = m.contentID " +
-                "JOIN [Cursus_ContentItem] cci on cci.ContentID = m.contentID " +
-                "JOIN Cursus cu on cu.CursusID = cci.CursusID " +
-                "WHERE cu.CursusNaam = ? ";
+        String query = "SELECT  TOP 3   ci.Titel, COUNT(cci.CursistId) " +
+                "FROM [Cursist_Content-item] cci " +
+                "JOIN [Content-Item] ci ON ci.ContentID = cci.ContentId " +
+                "GROUP BY cci.ContentID, ci.Titel " + 
+                "ORDER BY COUNT(cci.CursistId) DESC, cci.ContentId ASC ";
 
         try {
             PreparedStatement statement = connection.prepareStatement(query);
