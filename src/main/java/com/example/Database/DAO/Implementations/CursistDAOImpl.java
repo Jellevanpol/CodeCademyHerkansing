@@ -164,4 +164,27 @@ public class CursistDAOImpl implements CursistDAO {
 
         return false;
     }
+
+    @Override
+    public int getCursistIdFromName(String cursistNaam) {
+        int id = 0;
+        String query = "SELECT CursistId " +
+                "FROM Cursist " +
+                "WHERE Naam = ? ";
+
+        try {
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, cursistNaam);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                id = resultSet.getInt("CursistId");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return id;
+
+    }
+
 }

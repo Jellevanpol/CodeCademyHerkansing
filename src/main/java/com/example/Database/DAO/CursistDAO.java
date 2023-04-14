@@ -18,4 +18,6 @@ public interface CursistDAO {
                String emailAdres, String geslacht);
 
      boolean checkEmailCursist(String emailAdres);
+
+     int getCursistIdFromName(String cursistNaam);
 }

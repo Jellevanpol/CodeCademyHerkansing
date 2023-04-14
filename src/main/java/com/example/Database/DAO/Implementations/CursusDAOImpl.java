@@ -45,7 +45,6 @@ public class CursusDAOImpl implements CursusDAO {
     @Override
     public List<Cursus> getAllCursussenFromCursist(String cursistNaam) {
         List<Cursus> cursussen = new ArrayList<>();
-        List<Cursist> cursisten = new ArrayList<>();
 
         String query = "SELECT c.CursusNaam, cu.Naam " +
                 "FROM Cursus c " +
@@ -60,9 +59,7 @@ public class CursusDAOImpl implements CursusDAO {
 
             while (resultSet.next()) {
                 String cursusNaam = resultSet.getString("CursusNaam");
-                Cursist cursist = new Cursist(resultSet.getString("Naam"));
-                cursisten.add(cursist);
-                Cursus cursus = new Cursus(cursusNaam, cursisten);
+                Cursus cursus = new Cursus(cursusNaam);
                 cursussen.add(cursus);
             }
 
@@ -71,5 +68,25 @@ public class CursusDAOImpl implements CursusDAO {
         }
 
         return cursussen;
+    }
+
+    @Override
+    public int getCursusIdFromName(String cursistNaam) {
+        int id = 0;
+        String query = "SELECT CursusID " +
+                "FROM Cursus " +
+                "WHERE CursusNaam = ? ";
+
+        try {
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, cursistNaam);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                id = resultSet.getInt("CursusID");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return id;
     }
 }

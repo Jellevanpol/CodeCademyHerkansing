@@ -6,6 +6,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class Homescreen extends Application {
@@ -19,6 +20,7 @@ public class Homescreen extends Application {
         Button student = new Button("Progress student");
         Button top3 = new Button("Top 3 webcasts");
         Button completed = new Button("Completed modules");
+        Button enroll = new Button("Enroll student in course");
 
         Insets insetsButtons = new Insets(10);
 
@@ -38,18 +40,27 @@ public class Homescreen extends Application {
         completed.setPrefSize(150, 150);
         completed.setStyle("-fx-font-weight: bold");
 
+        // Styling enroll
+        enroll.setPrefSize(664, 25);
+        enroll.setStyle("-fx-font-weight: bold");
+
         // Set margin for buttons
         HBox.setMargin(module, insetsButtons);
         HBox.setMargin(student, insetsButtons);
         HBox.setMargin(top3, insetsButtons);
         HBox.setMargin(completed, insetsButtons);
+        HBox.setMargin(enroll, insetsButtons);
 
         // Add elements
         hbox.getChildren().addAll(module, student, top3, completed);
         hbox.setAlignment(Pos.CENTER);
 
+        VBox vBox = new VBox();
+        vBox.getChildren().addAll(hbox, enroll);
+        vBox.setAlignment(Pos.CENTER);
+
         // Set scene
-        Scene scene = new Scene(hbox, 800, 600);
+        Scene scene = new Scene(vBox, 800, 600);
         stage.setTitle("Jelle van Pol (2203205) & Kenan van der Heijden (2197280)");
         stage.setScene(scene);
         stage.show();
@@ -84,6 +95,15 @@ public class Homescreen extends Application {
             try {
                 Completed completedScreen = new Completed();
                 completedScreen.start(stage);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        });
+
+        enroll.setOnAction(e -> {
+            try {
+                Enroll enrollScreen = new Enroll();
+                enrollScreen.start(stage);
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
