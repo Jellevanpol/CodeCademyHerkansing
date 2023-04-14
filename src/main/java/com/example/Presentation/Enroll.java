@@ -52,6 +52,10 @@ public class Enroll extends Application {
             cursistNames.add(c.getNaam());
         }
 
+        Text kiesText = new Text("Kies een cursist:");
+        
+        Text kiesCursus = new Text("Kies een cursus:");
+
         // Create the first combobox
         ComboBox<String> comboBox1 = new ComboBox<>();
         comboBox1.getItems().addAll(cursistNames);
@@ -80,7 +84,7 @@ public class Enroll extends Application {
 
         // Create a VBox layout and add the components
         VBox vBox = new VBox();
-        vBox.getChildren().addAll(comboBox1, comboBox2, button, error);
+        vBox.getChildren().addAll(kiesText, comboBox1, kiesCursus, comboBox2, button, error);
         vBox.setAlignment(Pos.CENTER);
         vBox.setSpacing(10);
 

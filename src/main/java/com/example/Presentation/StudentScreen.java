@@ -26,6 +26,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class StudentScreen extends Application {
@@ -50,6 +51,9 @@ public class StudentScreen extends Application {
 
         Button back = new Button("Back");
         back.setPrefSize(100, 50);
+
+        Text kiesText = new Text("Kies een cursist:");
+        Text kiesCursus = new Text("Kies een cursus:");
 
         // String -> Cursist
         ComboBox<String> comboStudent = new ComboBox<>();
@@ -125,7 +129,7 @@ public class StudentScreen extends Application {
         HBox hbox = new HBox(10, createStudent, deleteStudent, updateStudent);
         hbox.setAlignment(Pos.CENTER);
 
-        VBox vBox = new VBox(10, comboStudent, comboCourse, tableView, hbox);
+        VBox vBox = new VBox(10, kiesText, comboStudent, kiesCursus, comboCourse, tableView, hbox);
         vBox.setAlignment(Pos.CENTER);
 
         BorderPane root = new BorderPane();

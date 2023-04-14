@@ -46,6 +46,8 @@ public class Completed extends Application {
         Button back = new Button("Back");
         back.setPrefSize(100, 50);
 
+        Text kiesText = new Text("Kies een cursus:");
+
         ComboBox<String> dropdown = new ComboBox<>();
         cursussen.stream().map(Cursus::getCursusNaam).forEach(dropdown.getItems()::add);
         dropdown.getSelectionModel().selectFirst();
@@ -60,7 +62,7 @@ public class Completed extends Application {
         VBox vboxText = new VBox(text);
         vboxText.setAlignment(Pos.CENTER);
 
-        VBox vbox = new VBox(10, dropdown, vboxText);
+        VBox vbox = new VBox(10, kiesText, dropdown, vboxText);
         vbox.setAlignment(Pos.CENTER);
 
         back.setOnAction(e -> {

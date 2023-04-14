@@ -68,7 +68,7 @@ public class ModuleDAOImpl implements ModuleDAO {
 
             while (resultSet.next()) {
                 String titel = resultSet.getString("Titel");
-                String progress = resultSet.getDouble("AVG_Voortgang") + "%";
+                String progress = resultSet.getDouble("AVG_Voortgang") + " %";
                 Module module = new Module(titel, progress);
                 modules.add(module);
             }
@@ -98,7 +98,7 @@ public class ModuleDAOImpl implements ModuleDAO {
 
             while (resultSet.next()) {
                 String titel = resultSet.getString("Titel");
-                String progress = resultSet.getDouble("Voortgang") + "%";
+                String progress = resultSet.getDouble("Voortgang") + " %";
                 Module module = new Module(titel, progress);
                 modules.add(module);
             }

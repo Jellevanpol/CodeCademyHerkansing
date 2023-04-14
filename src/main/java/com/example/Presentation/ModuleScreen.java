@@ -14,6 +14,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import com.example.Database.DatabaseConnection;
@@ -22,6 +23,7 @@ import com.example.Database.DAO.ModuleDAO;
 import com.example.Database.DAO.Implementations.CursusDAOImpl;
 import com.example.Database.DAO.Implementations.ModuleDAOImpl;
 import com.example.Domain.Module;
+import com.example.Domain.Content_item;
 import com.example.Domain.Cursus;
 
 public class ModuleScreen extends Application {
@@ -45,10 +47,12 @@ public class ModuleScreen extends Application {
         Button back = new Button("Back");
         back.setPrefSize(100, 50);
 
+        Text kiesText = new Text("Kies een cursus:");
+
         ComboBox<String> dropdown = new ComboBox<>();
         cursussen.stream().map(Cursus::getCursusNaam).forEach(dropdown.getItems()::add);
         dropdown.getSelectionModel().selectFirst();
-        dropdown.setMaxWidth(Double.MAX_VALUE);
+        dropdown.setMaxWidth(300);
 
         // Create the table view
         TableColumn<Module, String> titelColumn = new TableColumn<>("Titel");
@@ -66,7 +70,7 @@ public class ModuleScreen extends Application {
         }
 
         // Create a VBox to hold the dropdown and the table view
-        VBox vBox = new VBox(10, dropdown, tableView);
+        VBox vBox = new VBox(10, kiesText, dropdown, tableView);
         vBox.setAlignment(Pos.CENTER);
 
         // Create a BorderPane and put the VBox in the center
