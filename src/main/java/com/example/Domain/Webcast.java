@@ -5,12 +5,19 @@ public class Webcast {
     private String url;
     private String sprekerNaam;
     private String organisatieSpreker;
+    private String titel;
+    private int aantal;
 
     public Webcast(double duur, String url, String sprekerNaam, String organisatieSpreker) {
         this.duur = duur;
         this.url = url;
         this.sprekerNaam = sprekerNaam;
         this.organisatieSpreker = organisatieSpreker;
+    }
+
+    public Webcast(String titel, int aantal) {
+        this.titel = titel;
+        this.aantal = aantal;
     }
 
     public double getDuur() {
@@ -43,6 +50,22 @@ public class Webcast {
 
     public void setOrganisatieSpreker(String organisatieSpreker) {
         this.organisatieSpreker = organisatieSpreker;
+    }
+
+    public String getTitel() {
+        return titel;
+    }
+
+    public void setTitel(String titel) {
+        this.titel = titel;
+    }
+
+    public int getAantal() {
+        return aantal;
+    }
+
+    public void setAantal(int aantal) {
+        this.aantal = aantal;
     }
 
 }

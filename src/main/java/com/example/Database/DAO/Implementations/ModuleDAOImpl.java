@@ -25,9 +25,10 @@ public class ModuleDAOImpl implements ModuleDAO {
     @Override
     public List<Module> getAllModules() {
         List<Module> modules = new ArrayList<>();
-        String query = "SELECT ci.Titel, AVG(Voortgang) AS AVG_Voortgang " +
+        String query = "SELECT ci.Titel, AVG(cci.Voortgang) AS AVG_Voortgang " +
                 "FROM Module m " +
                 "JOIN [Content-Item] ci on ci.ContentID = m.contentID " +
+                "JOIN [Cursist_Content-item] cci on cci.ContentId = ci.contentID " +
                 "GROUP BY m.contentID, ci.Titel ";
 
         try {
@@ -52,13 +53,13 @@ public class ModuleDAOImpl implements ModuleDAO {
     public ObservableList<Module> getAllAverageModulesFromCursus(String cursusNaam) {
         ObservableList<Module> modules = FXCollections.observableArrayList();
 
-        String query = "SELECT ci.Titel, cu.CursusNaam, AVG(m.Voortgang) AS AVG_Voortgang " +
-                "FROM Module m " +
-                "JOIN [Content-Item] ci on ci.ContentID = m.contentID " +
-                "JOIN [Cursus_ContentItem] cci on cci.ContentID = m.contentID " +
+        String query = "SELECT ci.Titel, AVG(Voortgang) AS AVG_Voortgang " +
+                "FROM [Content-Item] ci " +
+                "JOIN [Cursus_ContentItem] cci on cci.ContentID = ci.contentID " +
+                "JOIN [Cursist_Content-item] cuci ON cuci.ContentId = ci.ContentId " +
                 "JOIN Cursus cu on cu.CursusID = cci.CursusID " +
-                "WHERE cu.CursusNaam = ? " +
-                "GROUP BY ci.Titel, cu.CursusNaam, m.contentID, m.Voortgang, m.ModuleID ";
+                "WHERE cu.CursusNaam = ? AND Type = 'Module'  " +
+                "GROUP BY ci.Titel, cu.CursusNaam, ci.contentID ";
 
         try {
             PreparedStatement statement = connection.prepareStatement(query);
@@ -83,7 +84,7 @@ public class ModuleDAOImpl implements ModuleDAO {
     public ObservableList<Module> getAllModulesFromCursus(String cursusNaam) {
         ObservableList<Module> modules = FXCollections.observableArrayList();
 
-        String query = "SELECT ci.Titel, cu.CursusNaam, Voortgang " +
+        String query = "SELECT ci.Titel, cu.CursusNaam, cci.Voortgang " +
                 "FROM Module m " +
                 "JOIN [Content-Item] ci on ci.ContentID = m.contentID " +
                 "JOIN [Cursus_ContentItem] cci on cci.ContentID = m.contentID " +

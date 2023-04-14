@@ -10,5 +10,5 @@ public interface WebcastDAO {
     List<Webcast> getAllWebcasts();
 
     ObservableList<Webcast> mostViewedWebcasts();
-    
+
 }

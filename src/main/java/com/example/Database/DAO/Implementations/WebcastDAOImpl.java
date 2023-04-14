@@ -20,7 +20,7 @@ public class WebcastDAOImpl implements WebcastDAO {
     public WebcastDAOImpl(DatabaseConnection databaseConnection) {
         this.connection = databaseConnection.getConnection();
     }
-    
+
     @Override
     public List<Webcast> getAllWebcasts() {
         return null;
@@ -30,10 +30,10 @@ public class WebcastDAOImpl implements WebcastDAO {
     public ObservableList<Webcast> mostViewedWebcasts() {
         ObservableList<Webcast> webcasts = FXCollections.observableArrayList();
 
-        String query = "SELECT  TOP 3   ci.Titel, COUNT(cci.CursistId) " +
+        String query = "SELECT  TOP 3   ci.Titel, COUNT(cci.CursistId) AS Aantal_Cursisten " +
                 "FROM [Cursist_Content-item] cci " +
                 "JOIN [Content-Item] ci ON ci.ContentID = cci.ContentId " +
-                "GROUP BY cci.ContentID, ci.Titel " + 
+                "GROUP BY cci.ContentID, ci.Titel " +
                 "ORDER BY COUNT(cci.CursistId) DESC, cci.ContentId ASC ";
 
         try {
@@ -42,8 +42,8 @@ public class WebcastDAOImpl implements WebcastDAO {
 
             while (resultSet.next()) {
                 String titel = resultSet.getString("Titel");
-                String progress = resultSet.getDouble("Voortgang") + "%";
-                Webcast webcast = new Webcast(0, progress, progress, progress);
+                int aantal = resultSet.getInt("Aantal_Cursisten");
+                Webcast webcast = new Webcast(titel, aantal);
                 webcasts.add(webcast);
             }
 
@@ -53,5 +53,5 @@ public class WebcastDAOImpl implements WebcastDAO {
 
         return webcasts;
     }
-    
+
 }

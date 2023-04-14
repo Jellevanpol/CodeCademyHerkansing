@@ -30,7 +30,7 @@ import javafx.stage.Stage;
 public class top3 extends Application {
     private DatabaseConnection databaseConnection;
     private WebcastDAO webcastDAO;
-    private TableView<Module> tableView = new TableView<>();
+    private TableView<Webcast> tableView = new TableView<>();
 
     public top3() throws SQLException {
         databaseConnection = new DatabaseConnection();
@@ -44,16 +44,18 @@ public class top3 extends Application {
 
         Text topText = new Text("The top 3 most viewed webcasts are: ");
 
-        TableColumn<Module, String> titelColumn = new TableColumn<>("Titel");
+        TableColumn<Webcast, String> titelColumn = new TableColumn<>("Titel");
         titelColumn.setCellValueFactory(new PropertyValueFactory<>("titel"));
 
-        TableColumn<Module, Double> progressColumn = new TableColumn<>("Aantal cursisten");
-        progressColumn.setCellValueFactory(new PropertyValueFactory<>("progress"));
+        TableColumn<Webcast, Double> progressColumn = new TableColumn<>("Aantal cursisten");
+        progressColumn.setCellValueFactory(new PropertyValueFactory<>("aantal"));
 
         tableView.getColumns().setAll(titelColumn, progressColumn);
         tableView.setMaxWidth(300);
         tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         ObservableList<Webcast> webcasts = webcastDAO.mostViewedWebcasts();
+        tableView.setItems(webcasts);
+        tableView.setPrefHeight(webcasts.size() * 37);
 
         VBox vbox = new VBox(10, topText, tableView);
         vbox.setAlignment(Pos.CENTER);

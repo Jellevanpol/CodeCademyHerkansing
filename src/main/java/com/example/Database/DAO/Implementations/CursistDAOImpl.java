@@ -52,7 +52,7 @@ public class CursistDAOImpl implements CursistDAO {
                 "JOIN Module m ON m.contentID = ci.ContentID " +
                 "WHERE NOT EXISTS (SELECT * " +
                 "FROM Module " +
-                "WHERE Voortgang != 100) ";
+                "WHERE cci.Voortgang != 100) ";
 
         try {
             PreparedStatement statement = connection.prepareStatement(query);
@@ -138,7 +138,7 @@ public class CursistDAOImpl implements CursistDAO {
             statement.setString(8, emailAdres);
             int rowsAffected = statement.executeUpdate();
             System.out.println(rowsAffected + " row(s) affected");
-                
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
