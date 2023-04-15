@@ -52,7 +52,10 @@ public class AdresDAOImpl implements AdresDAO {
         try {
             PreparedStatement statement = connection.prepareStatement(query);
             ResultSet resultSet = statement.executeQuery();
-            id = resultSet.getInt("AdresID");
+            
+            while (resultSet.next()) {
+                id = resultSet.getInt("AdresID");
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }

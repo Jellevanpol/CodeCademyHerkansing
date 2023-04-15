@@ -12,7 +12,6 @@ import com.example.Database.DAO.Implementations.CursistDAOImpl;
 import com.example.Database.DAO.Implementations.CursusDAOImpl;
 import com.example.Database.DAO.Implementations.InschrijvingDAOImpl;
 import com.example.Domain.Cursist;
-import com.example.Domain.Cursus;
 
 import javafx.application.Application;
 import javafx.geometry.Pos;

@@ -10,3 +10,4 @@ public class PercentageCheck {
         return false;
     }
 }
+    

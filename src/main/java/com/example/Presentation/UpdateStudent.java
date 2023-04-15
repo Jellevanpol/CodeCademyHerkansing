@@ -1,10 +1,12 @@
 package com.example.Presentation;
 
+import java.sql.Date;
 import java.sql.SQLException;
 
 import com.example.Database.DatabaseConnection;
 import com.example.Database.DAO.CursistDAO;
 import com.example.Database.DAO.Implementations.CursistDAOImpl;
+import com.example.Logic.DateCheck;
 import com.example.Logic.EmailCheck;
 
 import javafx.application.Application;
@@ -25,20 +27,19 @@ public class UpdateStudent extends Application {
     private DatabaseConnection databaseConnection;
     private CursistDAO cursistDAO;
     private EmailCheck emailCheck;
+    private DateCheck datumCheck;
 
     public UpdateStudent() throws SQLException {
         databaseConnection = new DatabaseConnection();
         cursistDAO = new CursistDAOImpl(databaseConnection);
         emailCheck = new EmailCheck();
+        datumCheck = new DateCheck();
     }
 
     @Override
     public void start(Stage stage) throws Exception {
         Text nameText = new Text("Naam");
         Text geboorteDatumText = new Text("Geboorte datum");
-        Text adresText = new Text("Adres");
-        Text woonplaatsText = new Text("Woonplaats");
-        Text landText = new Text("Land");
         Text emailAdresText = new Text("Email adres (LET OP: gebruik een correct format!)");
         Text geslachtText = new Text("Man, vrouw of anders");
         Text error = new Text();
@@ -47,15 +48,12 @@ public class UpdateStudent extends Application {
 
         TextField inputName = new TextField();
         TextField inputDatum = new TextField();
-        TextField inputAdres = new TextField();
-        TextField inputWoonplaats = new TextField();
-        TextField inputLand = new TextField();
         TextField inputEmail = new TextField();
         TextField inputGeslacht = new TextField();
         TextField awnser = new TextField();
         awnser.setPromptText("Email adres");
         awnser.setFocusTraversable(false);
-        setFieldsDisabled(true, inputName, inputDatum, inputAdres, inputWoonplaats, inputLand, inputEmail,
+        setFieldsDisabled(true, inputName, inputDatum, inputEmail,
                 inputGeslacht);
         Button back = new Button("Back");
         back.setPrefSize(100, 50);
@@ -67,11 +65,11 @@ public class UpdateStudent extends Application {
 
         awnser.textProperty().addListener((observable, oldValue, newValue) -> {
             if (cursistDAO.checkEmailCursist(newValue)) {
-                setFieldsDisabled(false, inputName, inputDatum, inputAdres, inputWoonplaats, inputLand, inputEmail,
+                setFieldsDisabled(false, inputName, inputDatum, inputEmail,
                         inputGeslacht);
                 error.setText("");
             } else {
-                setFieldsDisabled(true, inputName, inputDatum, inputAdres, inputWoonplaats, inputLand, inputEmail,
+                setFieldsDisabled(true, inputName, inputDatum, inputEmail,
                         inputGeslacht);
                 error.setText("User niet gevonden!");
             }
@@ -82,24 +80,20 @@ public class UpdateStudent extends Application {
             try {
                 String name = inputName.getText();
                 String geboorteDatum = inputDatum.getText();
-                String adres = inputAdres.getText();
-                String woonplaats = inputWoonplaats.getText();
-                String land = inputLand.getText();
                 String emailAdres = inputEmail.getText();
                 String geslacht = inputGeslacht.getText();
 
-                if (name.isEmpty() || geboorteDatum.isEmpty() || adres.isEmpty() || woonplaats.isEmpty()
-                        || land.isEmpty() || emailAdres.isEmpty() || geslacht.isEmpty()) {
+                if (name.isEmpty() || geboorteDatum.isEmpty() || emailAdres.isEmpty() || geslacht.isEmpty()) {
                     error.setText("Een of meerdere velden zijn niet gevuld!");
                     update.setDisable(true);
                 } else {
-                    if (emailCheck.correctEmail(emailAdres)) {
-                        cursistDAO.updateCursist(name, geboorteDatum, adres, woonplaats, land, emailAdres, geslacht);
+                    if (emailCheck.correctEmail(emailAdres) && datumCheck.isValidDate(geboorteDatum)) {
+                        cursistDAO.updateCursist(name, geboorteDatum, emailAdres, geslacht);
                         update.setDisable(false);
                         StudentScreen studentscreen = new StudentScreen();
                         studentscreen.start(stage);
                     }
-                    error.setText("Verkeerde email format!");
+                    error.setText("1 of meer velden verkeerd geformatteerd!");
                 }
             } catch (Exception ex) {
                 ex.printStackTrace();
@@ -120,9 +114,8 @@ public class UpdateStudent extends Application {
         hbox.setPadding(new Insets(0, 0, 20, 0));
         hbox.setAlignment(Pos.CENTER);
 
-        VBox vbox = new VBox(7, hbox, nameText, inputName, geboorteDatumText, inputDatum, adresText, inputAdres,
-                woonplaatsText,
-                inputWoonplaats, landText, inputLand, emailAdresText, inputEmail, geslachtText, inputGeslacht, error,
+        VBox vbox = new VBox(7, hbox, nameText, inputName, geboorteDatumText, inputDatum, emailAdresText, inputEmail,
+                geslachtText, inputGeslacht, error,
                 update);
         vbox.setMaxWidth(300);
         vbox.setAlignment(Pos.CENTER);
@@ -138,31 +131,19 @@ public class UpdateStudent extends Application {
 
         update.setDisable(true);
         inputName.textProperty().addListener((observable, oldValue, newValue) -> {
-            update.setDisable(isAnyTextFieldEmpty(inputName, inputDatum, inputAdres, inputWoonplaats, inputLand,
+            update.setDisable(isAnyTextFieldEmpty(inputName, inputDatum,
                     inputEmail, inputGeslacht));
         });
         inputDatum.textProperty().addListener((observable, oldValue, newValue) -> {
-            update.setDisable(isAnyTextFieldEmpty(inputName, inputDatum, inputAdres, inputWoonplaats, inputLand,
-                    inputEmail, inputGeslacht));
-        });
-        inputAdres.textProperty().addListener((observable, oldValue, newValue) -> {
-            update.setDisable(isAnyTextFieldEmpty(inputName, inputDatum, inputAdres, inputWoonplaats, inputLand,
-                    inputEmail, inputGeslacht));
-        });
-        inputWoonplaats.textProperty().addListener((observable, oldValue, newValue) -> {
-            update.setDisable(isAnyTextFieldEmpty(inputName, inputDatum, inputAdres, inputWoonplaats, inputLand,
-                    inputEmail, inputGeslacht));
-        });
-        inputLand.textProperty().addListener((observable, oldValue, newValue) -> {
-            update.setDisable(isAnyTextFieldEmpty(inputName, inputDatum, inputAdres, inputWoonplaats, inputLand,
+            update.setDisable(isAnyTextFieldEmpty(inputName, inputDatum,
                     inputEmail, inputGeslacht));
         });
         inputEmail.textProperty().addListener((observable, oldValue, newValue) -> {
-            update.setDisable(isAnyTextFieldEmpty(inputName, inputDatum, inputAdres, inputWoonplaats, inputLand,
+            update.setDisable(isAnyTextFieldEmpty(inputName, inputDatum,
                     inputEmail, inputGeslacht));
         });
         inputGeslacht.textProperty().addListener((observable, oldValue, newValue) -> {
-            update.setDisable(isAnyTextFieldEmpty(inputName, inputDatum, inputAdres, inputWoonplaats, inputLand,
+            update.setDisable(isAnyTextFieldEmpty(inputName, inputDatum,
                     inputEmail, inputGeslacht));
         });
     }
@@ -180,5 +161,9 @@ public class UpdateStudent extends Application {
             }
         }
         return false;
+    }
+
+    public static void main(String[] args) {
+        launch(Homescreen.class);
     }
 }

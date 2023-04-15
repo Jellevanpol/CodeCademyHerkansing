@@ -15,7 +15,7 @@ public interface CursistDAO {
 
      boolean deleteCursist(String naam);
 
-     void updateCursist(String naam, String geboorteDatum, String emailAdres, String geslacht, int adresID);
+     void updateCursist(String naam, String geboorteDatum, String emailAdres, String geslacht);
 
      boolean checkEmailCursist(String emailAdres);
 
