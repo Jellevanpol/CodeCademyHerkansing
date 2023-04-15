@@ -22,6 +22,7 @@ public class ModuleDAOImpl implements ModuleDAO {
         this.connection = databaseConnection.getConnection();
     }
 
+    // Deze query haalt alle modules op
     @Override
     public List<Module> getAllModules() {
         List<Module> modules = new ArrayList<>();
@@ -49,6 +50,8 @@ public class ModuleDAOImpl implements ModuleDAO {
         return modules;
     }
 
+    // Deze query haalt de gemiddelde voortgang op de modules van een meegegeven
+    // cursusNaam
     @Override
     public ObservableList<Module> getAllAverageModulesFromCursus(String cursusNaam) {
         ObservableList<Module> modules = FXCollections.observableArrayList();
@@ -80,6 +83,7 @@ public class ModuleDAOImpl implements ModuleDAO {
         return modules;
     }
 
+    // Deze query haalt alle modules van een cursus waar een cursist is ingeschreven
     @Override
     public ObservableList<Module> getAllModulesFromCursus(String cursusNaam, String emailAdres) {
         ObservableList<Module> modules = FXCollections.observableArrayList();

@@ -28,6 +28,7 @@ public class Completed extends Application {
     private CursusDAO cursusDAO;
     private CursistDAO cursistDAO;
 
+    // Constructor
     public Completed() throws SQLException {
         databaseConnection = new DatabaseConnection();
         cursusDAO = new CursusDAOImpl(databaseConnection);
@@ -38,18 +39,19 @@ public class Completed extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+        // Back button en tekst instatiëren
         Button back = new Button("Back");
         back.setPrefSize(100, 50);
-
         Text kiesText = new Text("Kies een cursus:");
+        Text text = new Text();
+        text.setText("Aantal cursisten die de cursus behaald hebben: xxx");
 
+        // Dropdown van cursussen maken en een listener geven
         ComboBox<String> dropdown = new ComboBox<>();
         cursussen.stream().map(Cursus::getCursusNaam).forEach(dropdown.getItems()::add);
         dropdown.getSelectionModel().selectFirst();
         dropdown.setMaxWidth(Double.MAX_VALUE);
 
-        Text text = new Text();
-        text.setText("Aantal cursisten die de cursus behaald hebben: xxx");
         dropdown.valueProperty().addListener((obs, oldVal, newVal) -> {
             if (dropdown.getValue() != null) {
                 behaald = cursistDAO.getCompletedCursisten(dropdown.getValue());

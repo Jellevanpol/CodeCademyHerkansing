@@ -57,10 +57,10 @@ public class AddAddress extends Application {
         add.setPrefSize(120, 40);
         add.setPadding(new Insets(10, 10, 10, 10));
 
-        // De setOnAction wordt voor het toevoegen van een student
+        // De setOnAction wordt voor het toevoegen van een adres
         add.setOnAction(e -> {
             try {
-                // Alle gegevens die nodig zijn voor het maken van een student
+                // Alle gegevens die nodig zijn voor het maken van een adres
                 String huisnummer = inputHuisnummer.getText();
                 String straatnaam = inputStraatNaam.getText();
                 String woonplaats = inputWoonplaats.getText();
@@ -72,8 +72,10 @@ public class AddAddress extends Application {
                         || land.isEmpty() || postcode.isEmpty()) {
                     error.setText("Een of meerdere velden zijn niet gevuld!");
                 } else {
+                    // Check of de postcode correct is
                     if (postCodeCheck.correctPostcode(postcode)) {
                         adresDAO.addAdress(huisnummer, straatnaam, woonplaats, land, postcode);
+                        // Stuur door naar de addStudentScreen
                         addStudent addStudentScreen = new addStudent();
                         addStudentScreen.start(stage);
                     } else {
@@ -85,6 +87,7 @@ public class AddAddress extends Application {
             }
         });
 
+        // back button werking
         back.setOnAction(e -> {
             try {
                 StudentScreen studentscreen = new StudentScreen();
@@ -94,20 +97,24 @@ public class AddAddress extends Application {
             }
         });
 
+        // Alle tekst(fields) toevoegen aan de vbox
         VBox vbox = new VBox(7, straatNaamText, inputStraatNaam, huisnummerText, inputHuisnummer, woonplaatsText,
                 inputWoonplaats, postcodeText, inputPostcode, landText, inputLand, error, add);
         vbox.setMaxWidth(300);
         vbox.setAlignment(Pos.CENTER);
 
+        // Root element aanmaken en stylen back
         BorderPane root = new BorderPane();
         root.setCenter(vbox);
         root.setBottom(back);
         BorderPane.setAlignment(back, Pos.BOTTOM_LEFT);
 
+        // Scene maken en laten zien
         Scene scene = new Scene(root, 800, 600);
         stage.setScene(scene);
         stage.show();
     }
+
     public static void main(String[] args) {
         launch(Homescreen.class);
     }

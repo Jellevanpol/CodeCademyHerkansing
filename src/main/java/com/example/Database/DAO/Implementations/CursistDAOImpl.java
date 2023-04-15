@@ -22,6 +22,7 @@ public class CursistDAOImpl implements CursistDAO {
         this.connection = databaseConnection.getConnection();
     }
 
+    // Deze query haalt alle cursisten op
     @Override
     public List<Cursist> getAllCursisten() {
         List<Cursist> cursisten = new ArrayList<>();
@@ -45,6 +46,7 @@ public class CursistDAOImpl implements CursistDAO {
         return cursisten;
     }
 
+    // Deze query haalt het aantal cursisten die een bepaalde cursus 100% afhebben
     @Override
     public int getCompletedCursisten(String cursusNaam) {
         int behaaldeCursisten = 0;
@@ -82,6 +84,7 @@ public class CursistDAOImpl implements CursistDAO {
         return behaaldeCursisten;
     }
 
+    // Deze query maakt een cursist aan in de database
     @Override
     public void createCursist(String naam, String geboorteDatum, String emailAdres, String geslacht, int adresID) {
 
@@ -102,6 +105,7 @@ public class CursistDAOImpl implements CursistDAO {
         }
     }
 
+    // Deze query verwijdert een cursist uit de database
     @Override
     public boolean deleteCursist(String emailAdres) {
         String query = "DELETE FROM cursist " +
@@ -110,10 +114,10 @@ public class CursistDAOImpl implements CursistDAO {
         try {
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, emailAdres);
-            int rowsDeleted = statement.executeUpdate(); // use executeUpdate instead of executeQuery
+            int rowsDeleted = statement.executeUpdate();
 
             if (rowsDeleted == 0) {
-                return false; // return false if no rows are affected
+                return false;
             }
 
         } catch (SQLException e) {
@@ -123,6 +127,7 @@ public class CursistDAOImpl implements CursistDAO {
         return true;
     }
 
+    // Deze query verandert de waardes van een bepaalde cursist
     @Override
     public void updateCursist(String naam, String geboorteDatum, String emailAdres, String geslacht) {
         String query = "UPDATE cursist " +
@@ -147,6 +152,8 @@ public class CursistDAOImpl implements CursistDAO {
         }
     }
 
+    // Deze query checkt of de meegegeven waarde een email is die in de database
+    // bestaat
     @Override
     public boolean checkEmailCursist(String emailAdres) {
         String query = "SELECT EmailAdres FROM cursist " +
@@ -168,6 +175,7 @@ public class CursistDAOImpl implements CursistDAO {
         return false;
     }
 
+    // Deze query haalt een cursistId op met d.m.v. de naam van de cursist
     @Override
     public int getCursistIdFromName(String cursistNaam) {
         int id = 0;
@@ -190,6 +198,7 @@ public class CursistDAOImpl implements CursistDAO {
 
     }
 
+    // Deze query haalt een cursistId op met d.m.v. de email van de cursist
     @Override
     public int getCursistIdFromEmail(String emailAdes) {
         int id = 0;
@@ -212,6 +221,7 @@ public class CursistDAOImpl implements CursistDAO {
 
     }
 
+    // Deze query haalt de emails van alle cursisten op
     @Override
     public ObservableList<String> getAllEmails() {
         ObservableList<String> emails = FXCollections.observableArrayList();
@@ -232,6 +242,7 @@ public class CursistDAOImpl implements CursistDAO {
         return emails;
     }
 
+    // Deze query haalt een cursist object op met een meegegeven emailadres
     @Override
     public Cursist getCursistFromEmail(String emailAdres) {
         Cursist cursist = null;
@@ -255,6 +266,7 @@ public class CursistDAOImpl implements CursistDAO {
         return cursist;
     }
 
+    // Deze haalt alle cursussen op waarin een cursist niet ingeschreven is
     @Override
     public List<String> getNotEnrolledInCursussen(String emailAdres) {
         List<String> cursussen = new ArrayList<>();

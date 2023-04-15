@@ -19,12 +19,6 @@ public class AdresDAOImpl implements AdresDAO {
     }
 
     @Override
-    public List<Adres> getAllAdressen() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getAllAdressen'");
-    }
-
-    @Override
     public void addAdress(String huisnummer, String straatnaam, String woonplaats, String land, String postcode) {
         String query = "INSERT INTO Adres(Huisnummer, StraatNaam, Woonplaats, Land, Postcode) " +
                 "VALUES(?, ?, ?, ?, ?) ";
@@ -52,7 +46,7 @@ public class AdresDAOImpl implements AdresDAO {
         try {
             PreparedStatement statement = connection.prepareStatement(query);
             ResultSet resultSet = statement.executeQuery();
-            
+
             while (resultSet.next()) {
                 id = resultSet.getInt("AdresID");
             }

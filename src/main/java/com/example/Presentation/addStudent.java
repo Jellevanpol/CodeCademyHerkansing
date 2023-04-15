@@ -73,9 +73,11 @@ public class addStudent extends Application {
                 if (name.isEmpty() || geboorteDatum.isEmpty() || emailAdres.isEmpty() || geslacht.isEmpty()) {
                     error.setText("Een of meerdere velden zijn niet gevuld!");
                 } else {
+                    // Check of de email en datum valide is
                     if (emailCheck.correctEmail(emailAdres) && datumCheck.isValidDate(geboorteDatum)) {
                         cursistDAO.createCursist(name, geboorteDatum, emailAdres, geslacht,
                                 adresID);
+                        // Stuur terug naar studentScreen
                         StudentScreen studentscreen = new StudentScreen();
                         studentscreen.start(stage);
                     } else {
@@ -86,15 +88,17 @@ public class addStudent extends Application {
                 ex.printStackTrace();
             }
         });
-
+        // Alle tekst(fields) toevoegen aan de vbox
         VBox vbox = new VBox(7, nameText, inputName, geboorteDatumText, inputDatum, emailAdresText, inputEmail,
                 geslachtText, inputGeslacht, error, add);
         vbox.setMaxWidth(300);
         vbox.setAlignment(Pos.CENTER);
 
+        // Root element aanmaken
         BorderPane root = new BorderPane();
         root.setCenter(vbox);
 
+        // Scene maken en laten zien
         Scene scene = new Scene(root, 800, 600);
         stage.setScene(scene);
         stage.show();

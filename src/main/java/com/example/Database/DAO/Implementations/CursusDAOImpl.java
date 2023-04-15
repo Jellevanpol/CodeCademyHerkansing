@@ -19,6 +19,7 @@ public class CursusDAOImpl implements CursusDAO {
         this.connection = databaseConnection.getConnection();
     }
 
+    // Deze query haalt alle cursussen op
     @Override
     public List<Cursus> getAllCursussen() {
         String query = "SELECT * FROM Cursus ";
@@ -41,6 +42,8 @@ public class CursusDAOImpl implements CursusDAO {
         return cursussen;
     }
 
+    // Deze query haalt alle cursussen op waarin een cursist ingeschreven is door
+    // een naam
     @Override
     public List<Cursus> getAllCursussenFromCursist(String cursistNaam) {
         List<Cursus> cursussen = new ArrayList<>();
@@ -69,6 +72,7 @@ public class CursusDAOImpl implements CursusDAO {
         return cursussen;
     }
 
+    // Deze query haalt de cursusId op met van een megegeven cursistNaam
     @Override
     public int getCursusIdFromName(String cursistNaam) {
         int id = 0;
@@ -89,6 +93,8 @@ public class CursusDAOImpl implements CursusDAO {
         return id;
     }
 
+    // Deze query haalt alle cursussen waarin een cursist ingeschreven is door een
+    // email
     @Override
     public List<Cursus> getAllCursussenFromEmail(String emailAdres) {
         List<Cursus> cursussen = new ArrayList<>();

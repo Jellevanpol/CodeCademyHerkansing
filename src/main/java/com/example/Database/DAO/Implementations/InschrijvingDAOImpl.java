@@ -24,6 +24,7 @@ public class InschrijvingDAOImpl implements InschrijvingDAO {
         throw new UnsupportedOperationException("Unimplemented method 'getAllInschrijvingen'");
     }
 
+    // Deze query schrijft de meegegeven cursist in in de meegegeven cursus
     @Override
     public void addInschrijving(int cursistID, int cursusID) {
         int id = 0;

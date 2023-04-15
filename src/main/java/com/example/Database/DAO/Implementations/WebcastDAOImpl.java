@@ -21,11 +21,13 @@ public class WebcastDAOImpl implements WebcastDAO {
         this.connection = databaseConnection.getConnection();
     }
 
+    // Query heeft nog geen implementatie en wordt nog nergens gebruikt
     @Override
     public List<Webcast> getAllWebcasts() {
         return null;
     }
 
+    // Deze methode haalt de drie meest bekeken webcasts op
     @Override
     public ObservableList<Webcast> mostViewedWebcasts() {
         ObservableList<Webcast> webcasts = FXCollections.observableArrayList();
