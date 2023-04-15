@@ -73,21 +73,18 @@ public class CursistDAOImpl implements CursistDAO {
     }
 
     @Override
-    public void createCursist(String naam, String geboorteDatum, String adres, String woonplaats, String land,
-            String emailAdres, String geslacht) {
+    public void createCursist(String naam, String geboorteDatum, String emailAdres, String geslacht, int adresID) {
 
-        String query = "INSERT INTO Cursist(Naam, GeboorteDatum, Adres, Woonplaats, Land, EmailAdres, Geslacht) " +
-                "VALUES(?, ?, ?, ?, ?, ? , ?) ";
+        String query = "INSERT INTO Cursist(Naam, GeboorteDatum, EmailAdres, Geslacht, AdresID) " +
+                "VALUES(?, ?, ?, ?, ?) ";
 
         try {
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, naam);
             statement.setString(2, geboorteDatum);
-            statement.setString(3, adres);
-            statement.setString(4, woonplaats);
-            statement.setString(5, land);
-            statement.setString(6, emailAdres);
-            statement.setString(7, geslacht);
+            statement.setString(3, emailAdres);
+            statement.setString(4, geslacht);
+            statement.setInt(5, adresID);
             ResultSet resultSet = statement.executeQuery();
 
         } catch (SQLException e) {
@@ -117,8 +114,7 @@ public class CursistDAOImpl implements CursistDAO {
     }
 
     @Override
-    public void updateCursist(String naam, String geboorteDatum, String adres, String woonplaats, String land,
-            String emailAdres, String geslacht) {
+    public void updateCursist(String naam, String geboorteDatum, String emailAdres, String geslacht, int adresID) {
         String query = "UPDATE cursist " +
                 "SET Naam = ?,  " +
                 "GeboorteDatum = ?, " +
@@ -133,9 +129,6 @@ public class CursistDAOImpl implements CursistDAO {
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, naam);
             statement.setDate(2, java.sql.Date.valueOf(geboorteDatum));
-            statement.setString(3, adres);
-            statement.setString(4, woonplaats);
-            statement.setString(5, land);
             statement.setString(6, emailAdres);
             statement.setString(7, geslacht);
             statement.setString(8, emailAdres);

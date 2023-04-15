@@ -11,13 +11,11 @@ public interface CursistDAO {
 
      int getCompletedCursisten();
 
-     void createCursist(String naam, String geboorteDatum, String adres, String woonplaats, String land,
-               String emailAdres, String geslacht);
+     void createCursist(String naam, String geboorteDatum, String emailAdres, String geslacht, int adresID);
 
      boolean deleteCursist(String naam);
 
-     void updateCursist(String naam, String geboorteDatum, String adres, String woonplaats, String land,
-               String emailAdres, String geslacht);
+     void updateCursist(String naam, String geboorteDatum, String emailAdres, String geslacht, int adresID);
 
      boolean checkEmailCursist(String emailAdres);
 
