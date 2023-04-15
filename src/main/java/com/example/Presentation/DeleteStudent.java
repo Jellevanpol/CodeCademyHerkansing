@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import com.example.Database.DatabaseConnection;
 import com.example.Database.DAO.CursistDAO;
 import com.example.Database.DAO.Implementations.CursistDAOImpl;
+import com.example.Logic.EmailCheck;
 
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -21,6 +22,7 @@ public class DeleteStudent extends Application{
     
     private DatabaseConnection databaseConnection;
     private CursistDAO cursistDAO;
+    private EmailCheck emailCheck;
 
     public DeleteStudent() throws SQLException {
         databaseConnection = new DatabaseConnection();
@@ -80,7 +82,4 @@ public class DeleteStudent extends Application{
         stage.show();
     }
 
-    public static void main(String[] args) {
-        launch(DeleteStudent.class);
-    }
-}
+} 

@@ -114,13 +114,10 @@ public class CursistDAOImpl implements CursistDAO {
     }
 
     @Override
-    public void updateCursist(String naam, String geboorteDatum, String emailAdres, String geslacht, int adresID) {
+    public void updateCursist(String naam, String geboorteDatum, String emailAdres, String geslacht) {
         String query = "UPDATE cursist " +
                 "SET Naam = ?,  " +
                 "GeboorteDatum = ?, " +
-                "Adres = ?, " +
-                "Woonplaats = ?, " +
-                "Land = ?, " +
                 "EmailAdres = ?, " +
                 "Geslacht = ? " +
                 "WHERE EmailAdres = ? ";
@@ -129,9 +126,9 @@ public class CursistDAOImpl implements CursistDAO {
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, naam);
             statement.setDate(2, java.sql.Date.valueOf(geboorteDatum));
-            statement.setString(6, emailAdres);
-            statement.setString(7, geslacht);
-            statement.setString(8, emailAdres);
+            statement.setString(3, emailAdres);
+            statement.setString(4, geslacht);
+            statement.setString(5, emailAdres);
             int rowsAffected = statement.executeUpdate();
             System.out.println(rowsAffected + " row(s) affected");
 

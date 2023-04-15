@@ -104,8 +104,8 @@ public class StudentScreen extends Application {
 
         createStudent.setOnAction(e -> {
             try {
-                addStudent addStudentScreen = new addStudent();
-                addStudentScreen.start(stage);
+                AddAddress addAddressScreen = new AddAddress();
+                addAddressScreen.start(stage);
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
@@ -205,5 +205,9 @@ public class StudentScreen extends Application {
                 comboBox.getItems().add(c.getCursusNaam());
             }
         }
+    }
+
+    public static void main(String[] args) {
+        launch(Homescreen.class);
     }
 }
