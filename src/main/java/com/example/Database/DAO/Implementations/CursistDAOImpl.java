@@ -46,23 +46,33 @@ public class CursistDAOImpl implements CursistDAO {
     }
 
     @Override
-    public int getCompletedCursisten() {
+    public int getCompletedCursisten(String cursusNaam) {
         int behaaldeCursisten = 0;
-        String query = "SELECT APPROX_COUNT_DISTINCT(c.cursistID) AS Behaald " +
-                "FROM Cursist c " +
-                "JOIN [Cursist_Content-item] cci ON cci.CursistId = c.CursistId " +
-                "JOIN [Content-Item] ci ON ci.ContentID = cci.ContentId " +
-                "JOIN Module m ON m.contentID = ci.ContentID " +
-                "WHERE NOT EXISTS (SELECT * " +
-                "FROM Module " +
-                "WHERE cci.Voortgang != 100) ";
+        String query = "SELECT COUNT(DISTINCT c.CursistID) AS NumCursisten " +
+                "FROM [Content-Item] ci " +
+                "JOIN Cursus_ContentItem ccu ON ccu.ContentID = ci.ContentID " +
+                "JOIN [Cursist_Content-Item] cc ON cc.ContentID = ci.ContentID " +
+                "JOIN Cursus u ON ccu.CursusID = u.CursusID " +
+                "JOIN Cursist c ON c.CursistID = cc.CursistID " +
+                "JOIN Inschrijving i ON c.CursistID = i.CursistID AND u.CursusID = i.CursusID " +
+                "WHERE u.CursusNaam = ? " +
+                "GROUP BY c.CursistID " +
+                "HAVING COUNT(DISTINCT ci.ContentID) = ( " +
+                "SELECT COUNT(DISTINCT ccu.ContentID) " +
+                "FROM Cursus_ContentItem ccu " +
+                "JOIN Cursus u ON ccu.CursusID = u.CursusID " +
+                "WHERE u.CursusNaam = ? " +
+                ") " +
+                "AND MIN(Voortgang) = 100 ";
 
         try {
             PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, cursusNaam);
+            statement.setString(2, cursusNaam);
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
-                behaaldeCursisten = resultSet.getInt("Behaald");
+                behaaldeCursisten = resultSet.getInt("NumCursisten");
             }
 
         } catch (SQLException e) {

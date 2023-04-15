@@ -19,7 +19,7 @@ public class Homescreen extends Application {
         Button module = new Button("Progress module");
         Button student = new Button("Progress student");
         Button top3 = new Button("Top 3 webcasts");
-        Button completed = new Button("Completed modules");
+        Button completed = new Button("Completed courses");
         Button enroll = new Button("Enroll student in course");
 
         Insets insetsButtons = new Insets(10);
@@ -51,7 +51,7 @@ public class Homescreen extends Application {
         HBox.setMargin(completed, insetsButtons);
         HBox.setMargin(enroll, insetsButtons);
 
-        // Add elements
+        // Elementen toevoegen aan hBox element
         hbox.getChildren().addAll(module, student, top3, completed);
         hbox.setAlignment(Pos.CENTER);
 

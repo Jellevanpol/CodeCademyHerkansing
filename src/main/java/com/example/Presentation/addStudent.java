@@ -50,6 +50,8 @@ public class addStudent extends Application {
         TextField inputName = new TextField();
         TextField inputDatum = new TextField();
         TextField inputEmail = new TextField();
+        inputDatum.setPromptText("e.g. YYYY-MM-DD");
+        inputEmail.setPromptText("e.g. Johndoe@gmail.com");
         TextField inputGeslacht = new TextField();
 
         // De Toevoegen-knop wordt geïnstantieerd en gestyled
@@ -97,6 +99,7 @@ public class addStudent extends Application {
         stage.setScene(scene);
         stage.show();
     }
+
     public static void main(String[] args) {
         launch(Homescreen.class);
     }

@@ -1,18 +1,10 @@
 package com.example.Presentation;
 
 import java.sql.SQLException;
-import java.util.List;
-
 import com.example.Database.DatabaseConnection;
-import com.example.Database.DAO.CursistDAO;
-import com.example.Database.DAO.CursusDAO;
 import com.example.Database.DAO.WebcastDAO;
-import com.example.Database.DAO.Implementations.CursistDAOImpl;
-import com.example.Database.DAO.Implementations.CursusDAOImpl;
 import com.example.Database.DAO.Implementations.WebcastDAOImpl;
-import com.example.Domain.Cursus;
 import com.example.Domain.Webcast;
-
 import javafx.application.Application;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableColumn;
@@ -21,7 +13,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -78,7 +69,7 @@ public class top3 extends Application {
         stage.setScene(scene);
         stage.show();
     }
-    
+
     public static void main(String[] args) {
         launch(Homescreen.class);
     }

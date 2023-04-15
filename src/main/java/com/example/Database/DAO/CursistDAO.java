@@ -8,7 +8,7 @@ import javafx.collections.ObservableList;
 public interface CursistDAO {
      public List<Cursist> getAllCursisten();
 
-     public int getCompletedCursisten();
+     public int getCompletedCursisten(String cursusNaam);
 
      public void createCursist(String naam, String geboorteDatum, String emailAdres, String geslacht, int adres);
 

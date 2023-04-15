@@ -38,6 +38,7 @@ public class UpdateStudent extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+        // Alle teksten worden geïnstantieerd
         Text nameText = new Text("Naam");
         Text geboorteDatumText = new Text("Geboorte datum");
         Text emailAdresText = new Text("Email adres (LET OP: gebruik een correct format!)");
@@ -46,15 +47,19 @@ public class UpdateStudent extends Application {
         error.setFill(Color.RED);
         Text question = new Text("Welke cursist wilt u updaten?");
 
+        // Alle tekstvelden worden geïnstantieerd
         TextField inputName = new TextField();
         TextField inputDatum = new TextField();
+        inputDatum.setPromptText("e.g. YYYY-MM-DD");
         TextField inputEmail = new TextField();
+        inputEmail.setPromptText("e.g. Johndoe@gmail.com");
         TextField inputGeslacht = new TextField();
         TextField awnser = new TextField();
         awnser.setPromptText("Email adres");
         awnser.setFocusTraversable(false);
         setFieldsDisabled(true, inputName, inputDatum, inputEmail,
                 inputGeslacht);
+
         Button back = new Button("Back");
         back.setPrefSize(100, 50);
 

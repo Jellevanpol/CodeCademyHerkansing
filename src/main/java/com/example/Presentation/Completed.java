@@ -49,10 +49,13 @@ public class Completed extends Application {
         dropdown.setMaxWidth(Double.MAX_VALUE);
 
         Text text = new Text();
-        if (dropdown.getValue() != null) {
-            behaald = cursistDAO.getCompletedCursisten();
-            text.setText("Aantal cursisten die de cursus behaald hebben: " + behaald);
-        }
+        text.setText("Aantal cursisten die de cursus behaald hebben: xxx");
+        dropdown.valueProperty().addListener((obs, oldVal, newVal) -> {
+            if (dropdown.getValue() != null) {
+                behaald = cursistDAO.getCompletedCursisten(dropdown.getValue());
+                text.setText("Aantal cursisten die de cursus behaald hebben: " + behaald);
+            }
+        });
 
         VBox vboxText = new VBox(text);
         vboxText.setAlignment(Pos.CENTER);
@@ -78,6 +81,7 @@ public class Completed extends Application {
         stage.setScene(scene);
         stage.show();
     }
+
     public static void main(String[] args) {
         launch(Homescreen.class);
     }
