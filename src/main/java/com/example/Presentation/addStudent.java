@@ -20,6 +20,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+
 public class addStudent extends Application {
     private DatabaseConnection databaseConnection;
     private CursistDAO cursistDAO;
@@ -95,5 +96,8 @@ public class addStudent extends Application {
         Scene scene = new Scene(root, 800, 600);
         stage.setScene(scene);
         stage.show();
+    }
+    public static void main(String[] args) {
+        launch(Homescreen.class);
     }
 }
