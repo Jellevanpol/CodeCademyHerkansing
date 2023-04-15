@@ -9,7 +9,6 @@ import java.util.List;
 
 import com.example.Database.DatabaseConnection;
 import com.example.Database.DAO.CursusDAO;
-import com.example.Domain.Cursist;
 import com.example.Domain.Cursus;
 
 public class CursusDAOImpl implements CursusDAO {

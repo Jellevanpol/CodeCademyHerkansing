@@ -5,11 +5,11 @@ import java.util.List;
 import com.example.Domain.Cursus;
 
 public interface CursusDAO {
-    List<Cursus> getAllCursussen();
+    public List<Cursus> getAllCursussen();
 
-    List<Cursus> getAllCursussenFromCursist(String cursistNaam);
+    public List<Cursus> getAllCursussenFromCursist(String cursistNaam);
 
-    int getCursusIdFromName(String cursistNaam);
+    public int getCursusIdFromName(String cursistNaam);
 
-    List<Cursus> getAllCursussenFromEmail(String emailAdres);
+    public List<Cursus> getAllCursussenFromEmail(String emailAdres);
 }

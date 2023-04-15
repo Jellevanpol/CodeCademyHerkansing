@@ -23,7 +23,6 @@ import com.example.Database.DAO.ModuleDAO;
 import com.example.Database.DAO.Implementations.CursusDAOImpl;
 import com.example.Database.DAO.Implementations.ModuleDAOImpl;
 import com.example.Domain.Module;
-import com.example.Domain.Content_item;
 import com.example.Domain.Cursus;
 
 public class ModuleScreen extends Application {

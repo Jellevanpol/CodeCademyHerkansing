@@ -6,9 +6,9 @@ import com.example.Domain.Module;
 import javafx.collections.ObservableList;
 
 public interface ModuleDAO {
-    List<Module> getAllModules();
+    public List<Module> getAllModules();
 
-    ObservableList<Module> getAllAverageModulesFromCursus(String cursusNaam);
+    public ObservableList<Module> getAllAverageModulesFromCursus(String cursusNaam);
 
-    ObservableList<Module> getAllModulesFromCursus(String cursusNaam, String emailAdres);
+    public ObservableList<Module> getAllModulesFromCursus(String cursusNaam, String emailAdres);
 }

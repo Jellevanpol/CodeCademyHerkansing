@@ -63,6 +63,7 @@ public class Enroll extends Application {
         ComboBox<String> comboBox2 = new ComboBox<>();
         comboBox2.setDisable(true);
         comboBox1.valueProperty().addListener((obs, oldVal, newVal) -> {
+            comboBox2.getItems().clear();
             comboBox2.setDisable(false);
             cursistNames = cursistDAO.getNotEnrolledInCursussen(newVal);
             comboBox2.getItems().addAll(cursistNames);
@@ -76,7 +77,6 @@ public class Enroll extends Application {
         // waarde zit
         comboBox2.valueProperty().addListener((obs, oldVal, newVal) -> {
             button.setDisable(false);
-
         });
 
         button.setOnAction(e -> {
@@ -110,23 +110,4 @@ public class Enroll extends Application {
             }
         });
     }
-
-    // public void populateComboBoxCourse(ComboBox<String> comboBox,
-    // ComboBox<String> comboBox2) {
-    // List<Cursus> cursussen = new ArrayList<>(cursusDAO.getAllCursussen());
-    // List<String> cursusNames = new ArrayList<>();
-    // for (Cursus c : cursussen) {
-    // cursusNames.add(c.getCursusNaam());
-    // }
-    // List<Cursus> cursussenFromCursist = new
-    // ArrayList<>(cursusDAO.getAllCursussenFromEmail(comboBox2.getValue()));
-    // List<String> cursusNamesCursist = new ArrayList<>();
-
-    // for (Cursus c : cursussenFromCursist) {
-    // cursusNamesCursist.add(c.getCursusNaam());
-    // }
-    // cursusNames.removeAll(cursusNamesCursist);
-    // comboBox.getItems().addAll(cursusNames);
-
-    // }
 }

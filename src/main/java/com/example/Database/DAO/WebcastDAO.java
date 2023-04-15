@@ -7,7 +7,7 @@ import com.example.Domain.Webcast;
 import javafx.collections.ObservableList;
 
 public interface WebcastDAO {
-    List<Webcast> getAllWebcasts();
+    public List<Webcast> getAllWebcasts();
 
-    ObservableList<Webcast> mostViewedWebcasts();
+    public ObservableList<Webcast> mostViewedWebcasts();
 }

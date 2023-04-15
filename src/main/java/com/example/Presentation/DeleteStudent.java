@@ -5,7 +5,6 @@ import java.sql.SQLException;
 import com.example.Database.DatabaseConnection;
 import com.example.Database.DAO.CursistDAO;
 import com.example.Database.DAO.Implementations.CursistDAOImpl;
-import com.example.Logic.EmailCheck;
 
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -18,11 +17,10 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-public class DeleteStudent extends Application{
-    
+public class DeleteStudent extends Application {
+
     private DatabaseConnection databaseConnection;
     private CursistDAO cursistDAO;
-    private EmailCheck emailCheck;
 
     public DeleteStudent() throws SQLException {
         databaseConnection = new DatabaseConnection();
@@ -42,7 +40,7 @@ public class DeleteStudent extends Application{
         Button delete = new Button("Delete student");
         delete.setPrefSize(120, 40);
         delete.setPadding(new Insets(10, 10, 10, 10));
-        
+
         delete.setOnAction(e -> {
             try {
                 String emailAdres = inputEmail.getText();
@@ -50,9 +48,9 @@ public class DeleteStudent extends Application{
                 if (cursistDAO.deleteCursist(emailAdres) == false) {
                     error.setText("Email niet gevonden!");
                 } else {
-                        cursistDAO.deleteCursist(emailAdres);
-                        StudentScreen studentscreen = new StudentScreen();
-                        studentscreen.start(stage);
+                    cursistDAO.deleteCursist(emailAdres);
+                    StudentScreen studentscreen = new StudentScreen();
+                    studentscreen.start(stage);
                 }
             } catch (Exception ex) {
                 ex.printStackTrace();
@@ -82,4 +80,4 @@ public class DeleteStudent extends Application{
         stage.show();
     }
 
-} 
+}

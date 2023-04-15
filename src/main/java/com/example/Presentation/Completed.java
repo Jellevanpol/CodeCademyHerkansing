@@ -8,18 +8,13 @@ import com.example.Database.DAO.CursistDAO;
 import com.example.Database.DAO.CursusDAO;
 import com.example.Database.DAO.Implementations.CursistDAOImpl;
 import com.example.Database.DAO.Implementations.CursusDAOImpl;
-import com.example.Domain.Cursist;
 import com.example.Domain.Cursus;
 
 import javafx.application.Application;
-import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -54,7 +49,7 @@ public class Completed extends Application {
         dropdown.setMaxWidth(Double.MAX_VALUE);
 
         Text text = new Text();
-        if(dropdown.getValue() != null){
+        if (dropdown.getValue() != null) {
             behaald = cursistDAO.getCompletedCursisten();
             text.setText("Aantal cursisten die de cursus behaald hebben: " + behaald);
         }

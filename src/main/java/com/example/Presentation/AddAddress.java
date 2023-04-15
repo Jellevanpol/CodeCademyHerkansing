@@ -4,10 +4,7 @@ import java.sql.SQLException;
 
 import com.example.Database.DatabaseConnection;
 import com.example.Database.DAO.AdresDAO;
-import com.example.Database.DAO.CursistDAO;
 import com.example.Database.DAO.Implementations.AdresDAOImpl;
-import com.example.Database.DAO.Implementations.CursistDAOImpl;
-import com.example.Logic.EmailCheck;
 import com.example.Logic.PostCodeCheck;
 
 import javafx.application.Application;

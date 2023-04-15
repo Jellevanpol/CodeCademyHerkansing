@@ -34,7 +34,6 @@ public class StudentScreen extends Application {
     private CursusDAO cursusDAO;
     private DatabaseConnection databaseConnection;
     private CursistDAO cursistDAO;
-    private List<Cursist> cursisten;
     private List<Cursus> courses;
     private ModuleDAO moduleDAO;
     private List<String> emails;
@@ -43,7 +42,6 @@ public class StudentScreen extends Application {
         databaseConnection = new DatabaseConnection();
         cursistDAO = new CursistDAOImpl(databaseConnection);
         cursusDAO = new CursusDAOImpl(databaseConnection);
-        cursisten = cursistDAO.getAllCursisten();
         moduleDAO = new ModuleDAOImpl(databaseConnection);
         emails = cursistDAO.getAllEmails();
     }
@@ -90,10 +88,6 @@ public class StudentScreen extends Application {
         Button createStudent = new Button("Add student");
         Button deleteStudent = new Button("Delete student");
         Button updateStudent = new Button("Edit student");
-
-        // createStudent.setDisable(true);
-        // deleteStudent.setDisable(true);
-        // updateStudent.setDisable(true);
 
         comboStudent.valueProperty().addListener((obs, oldVal, newVal) -> {
             // Enable the ComboBox and populate it with the modules for the selected cursist
@@ -156,33 +150,8 @@ public class StudentScreen extends Application {
     }
 
     public void populateComboBoxNames(ComboBox<String> comboBox) {
-        // cursisten.stream().map(Cursist::getNaam).forEach(comboBox.getItems()::add);
         emails.stream().forEach(comboBox.getItems()::add);
     }
-
-    // public void populateComboBoxCourses(ComboBox<String> comboBox,
-    // ComboBox<String> comboBox2) {
-    // String selectedCursistName = comboBox2.getValue();
-    // Cursist selectedCursist = null;
-    // for (Cursist c : cursisten) {
-    // if (c.getNaam().equals(selectedCursistName)) {
-    // selectedCursist = c;
-    // break;
-    // }
-    // }
-
-    // if (selectedCursist != null) {
-    // String cursistNaam = selectedCursist.getNaam();
-
-    // courses = cursusDAO.getAllCursussenFromCursist(cursistNaam);
-
-    // comboBox.getItems().clear();
-
-    // for (Cursus c : courses) {
-    // comboBox.getItems().add(c.getCursusNaam());
-    // }
-    // }
-    // }
 
     public void populateComboBoxCourses(ComboBox<String> comboBox, ComboBox<String> comboBox2) {
         String selectedCursistEmail = comboBox2.getValue();

@@ -5,6 +5,6 @@ import java.util.List;
 import com.example.Domain.Content_item;
 
 public interface Content_itemDAO {
-    List<Content_item> getAllItems();
-    
+    public List<Content_item> getAllItems();
+
 }
