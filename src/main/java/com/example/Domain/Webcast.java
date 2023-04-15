@@ -1,7 +1,7 @@
 package com.example.Domain;
 
 public class Webcast {
-    private double duur;
+    private int duur;
     private String url;
     private String sprekerNaam;
     private String organisatieSpreker;
@@ -9,7 +9,7 @@ public class Webcast {
     private int aantal;
 
     // Algemene Constructor
-    public Webcast(double duur, String url, String sprekerNaam, String organisatieSpreker) {
+    public Webcast(int duur, String url, String sprekerNaam, String organisatieSpreker) {
         this.duur = duur;
         this.url = url;
         this.sprekerNaam = sprekerNaam;
@@ -23,11 +23,11 @@ public class Webcast {
     }
 
     // Getters en Setters
-    public double getDuur() {
+    public int getDuur() {
         return this.duur;
     }
 
-    public void setDuur(double duur) {
+    public void setDuur(int duur) {
         this.duur = duur;
     }
 
