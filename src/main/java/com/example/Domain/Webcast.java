@@ -8,6 +8,7 @@ public class Webcast {
     private String titel;
     private int aantal;
 
+    // Algemene Constructor
     public Webcast(double duur, String url, String sprekerNaam, String organisatieSpreker) {
         this.duur = duur;
         this.url = url;
@@ -15,11 +16,13 @@ public class Webcast {
         this.organisatieSpreker = organisatieSpreker;
     }
 
+    // Tweede constructor
     public Webcast(String titel, int aantal) {
         this.titel = titel;
         this.aantal = aantal;
     }
 
+    // Getters en Setters
     public double getDuur() {
         return this.duur;
     }

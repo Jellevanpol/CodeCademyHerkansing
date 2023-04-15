@@ -11,6 +11,9 @@ import com.example.Database.DatabaseConnection;
 import com.example.Database.DAO.CursistDAO;
 import com.example.Domain.Cursist;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 public class CursistDAOImpl implements CursistDAO {
 
     private final Connection connection;
@@ -185,6 +188,101 @@ public class CursistDAOImpl implements CursistDAO {
         }
         return id;
 
+    }
+
+    @Override
+    public int getCursistIdFromEmail(String emailAdes) {
+        int id = 0;
+        String query = "SELECT CursistId " +
+                "FROM Cursist " +
+                "WHERE EmailAdres = ? ";
+
+        try {
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, emailAdes);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                id = resultSet.getInt("CursistId");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return id;
+
+    }
+
+    @Override
+    public ObservableList<String> getAllEmails() {
+        ObservableList<String> emails = FXCollections.observableArrayList();
+        String query = "SELECT EmailAdres " +
+                "FROM Cursist ";
+
+        try {
+            PreparedStatement statement = connection.prepareStatement(query);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                String email = resultSet.getString("EmailAdres");
+                emails.add(email);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return emails;
+    }
+
+    @Override
+    public Cursist getCursistFromEmail(String emailAdres) {
+        Cursist cursist = null;
+        String query = "SELECT EmailAdres, Naam " +
+                "FROM Cursist " +
+                "WHERE EmailAdres = ? ";
+
+        try {
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, emailAdres);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                String email = resultSet.getString("EmailAdres");
+                String naam = resultSet.getString("Naam");
+                cursist = new Cursist(naam, email);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return cursist;
+    }
+
+    @Override
+    public List<String> getNotEnrolledInCursussen(String emailAdres) {
+        List<String> cursussen = new ArrayList<>();
+
+        String query = "SELECT CursusNaam " +
+                "FROM Cursus " +
+                "WHERE CursusID NOT IN ( " +
+                "SELECT c.CursusID " +
+                "FROM Cursus c " +
+                "JOIN Inschrijving i ON i.CursusID = c.CursusID " +
+                "JOIN Cursist cu ON cu.CursistId = i.CursistID " +
+                "WHERE EmailAdres = ? ) ";
+
+        try {
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, emailAdres);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                String naam = resultSet.getString("CursusNaam");
+                cursussen.add(naam);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return cursussen;
     }
 
 }

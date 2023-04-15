@@ -8,7 +8,6 @@ import java.util.List;
 
 import com.example.Database.DatabaseConnection;
 import com.example.Database.DAO.InschrijvingDAO;
-import com.example.Domain.Cursist;
 import com.example.Domain.Inschrijving;
 
 public class InschrijvingDAOImpl implements InschrijvingDAO {
@@ -27,6 +26,7 @@ public class InschrijvingDAOImpl implements InschrijvingDAO {
 
     @Override
     public void addInschrijving(int cursistID, int cursusID) {
+        int id = 0;
         String query = "INSERT INTO Inschrijving (CursistID, CursusID, Datum) " +
                 "VALUES (?, ?, getDate()) ";
 
@@ -35,6 +35,9 @@ public class InschrijvingDAOImpl implements InschrijvingDAO {
             statement.setInt(1, cursistID);
             statement.setInt(2, cursusID);
             ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                id = resultSet.getInt(id);
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();

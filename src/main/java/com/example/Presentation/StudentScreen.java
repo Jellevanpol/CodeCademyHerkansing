@@ -37,6 +37,7 @@ public class StudentScreen extends Application {
     private List<Cursist> cursisten;
     private List<Cursus> courses;
     private ModuleDAO moduleDAO;
+    private List<String> emails;
 
     public StudentScreen() throws SQLException {
         databaseConnection = new DatabaseConnection();
@@ -44,6 +45,7 @@ public class StudentScreen extends Application {
         cursusDAO = new CursusDAOImpl(databaseConnection);
         cursisten = cursistDAO.getAllCursisten();
         moduleDAO = new ModuleDAOImpl(databaseConnection);
+        emails = cursistDAO.getAllEmails();
     }
 
     @Override
@@ -66,6 +68,7 @@ public class StudentScreen extends Application {
             // Enable the ComboBox and populate it with the modules for the selected cursist
             comboCourse.setDisable(false);
             populateComboBoxCourses(comboCourse, comboStudent);
+            tableView.getItems().clear();
         });
 
         TableColumn<Module, String> titelColumn = new TableColumn<>("Titel");
@@ -79,7 +82,7 @@ public class StudentScreen extends Application {
         tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         comboCourse.valueProperty().addListener((obs, oldVal, newVal) -> {
             if (newVal != null && comboStudent.getValue() != null) {
-                ObservableList<Module> modules = moduleDAO.getAllModulesFromCursus(newVal);
+                ObservableList<Module> modules = moduleDAO.getAllModulesFromCursus(newVal, comboStudent.getValue());
                 tableView.setItems(modules);
             }
         });
@@ -153,15 +156,40 @@ public class StudentScreen extends Application {
     }
 
     public void populateComboBoxNames(ComboBox<String> comboBox) {
-        cursisten.stream().map(Cursist::getNaam).forEach(comboBox.getItems()::add);
+        // cursisten.stream().map(Cursist::getNaam).forEach(comboBox.getItems()::add);
+        emails.stream().forEach(comboBox.getItems()::add);
     }
 
+    // public void populateComboBoxCourses(ComboBox<String> comboBox,
+    // ComboBox<String> comboBox2) {
+    // String selectedCursistName = comboBox2.getValue();
+    // Cursist selectedCursist = null;
+    // for (Cursist c : cursisten) {
+    // if (c.getNaam().equals(selectedCursistName)) {
+    // selectedCursist = c;
+    // break;
+    // }
+    // }
+
+    // if (selectedCursist != null) {
+    // String cursistNaam = selectedCursist.getNaam();
+
+    // courses = cursusDAO.getAllCursussenFromCursist(cursistNaam);
+
+    // comboBox.getItems().clear();
+
+    // for (Cursus c : courses) {
+    // comboBox.getItems().add(c.getCursusNaam());
+    // }
+    // }
+    // }
+
     public void populateComboBoxCourses(ComboBox<String> comboBox, ComboBox<String> comboBox2) {
-        String selectedCursistName = comboBox2.getValue();
+        String selectedCursistEmail = comboBox2.getValue();
         Cursist selectedCursist = null;
-        for (Cursist c : cursisten) {
-            if (c.getNaam().equals(selectedCursistName)) {
-                selectedCursist = c;
+        for (String s : emails) {
+            if (s.equals(selectedCursistEmail)) {
+                selectedCursist = cursistDAO.getCursistFromEmail(s);
                 break;
             }
         }

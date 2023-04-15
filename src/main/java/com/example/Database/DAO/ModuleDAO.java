@@ -10,5 +10,5 @@ public interface ModuleDAO {
 
     ObservableList<Module> getAllAverageModulesFromCursus(String cursusNaam);
 
-    ObservableList<Module> getAllModulesFromCursus(String cursusNaam);
+    ObservableList<Module> getAllModulesFromCursus(String cursusNaam, String emailAdres);
 }

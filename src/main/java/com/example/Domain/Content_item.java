@@ -10,6 +10,7 @@ public class Content_item {
     private Date pubDate;
     private Status status;
 
+    // Algemene Constructor
     public Content_item(String contentId, String titel, String beschrijving, Date pubDate, Status status) {
         this.contentId = contentId;
         this.titel = titel;
@@ -18,6 +19,7 @@ public class Content_item {
         this.status = status;
     }
 
+    // Getters en Setters
     public String getContentId() {
         return this.contentId;
     }

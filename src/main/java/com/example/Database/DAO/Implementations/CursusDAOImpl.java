@@ -89,4 +89,32 @@ public class CursusDAOImpl implements CursusDAO {
         }
         return id;
     }
+
+    @Override
+    public List<Cursus> getAllCursussenFromEmail(String emailAdres) {
+        List<Cursus> cursussen = new ArrayList<>();
+
+        String query = "SELECT c.CursusNaam, cu.Naam " +
+                "FROM Cursus c " +
+                "JOIN Inschrijving i on i.CursusID = c.CursusID " +
+                "JOIN Cursist cu on cu.CursistId = i.CursistID " +
+                "WHERE cu.EmailAdres = ? ";
+
+        try {
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, emailAdres);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                String cursusNaam = resultSet.getString("CursusNaam");
+                Cursus cursus = new Cursus(cursusNaam);
+                cursussen.add(cursus);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return cursussen;
+    }
 }

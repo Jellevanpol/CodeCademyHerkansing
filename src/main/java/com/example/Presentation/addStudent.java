@@ -23,6 +23,7 @@ public class addStudent extends Application {
     private CursistDAO cursistDAO;
     private EmailCheck emailCheck;
 
+    // Constructor
     public addStudent() throws SQLException {
         databaseConnection = new DatabaseConnection();
         cursistDAO = new CursistDAOImpl(databaseConnection);
@@ -31,6 +32,7 @@ public class addStudent extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+        // Alle teksten worden geïnstantieerd
         Text nameText = new Text("Naam");
         Text geboorteDatumText = new Text("Geboorte datum");
         Text adresText = new Text("Adres");
@@ -40,6 +42,7 @@ public class addStudent extends Application {
         Text geslachtText = new Text("Man, vrouw of anders");
         Text error = new Text();
 
+        // Alle TextFields worden geïnstantieerd
         TextField inputName = new TextField();
         TextField inputDatum = new TextField();
         TextField inputAdres = new TextField();
@@ -48,15 +51,19 @@ public class addStudent extends Application {
         TextField inputEmail = new TextField();
         TextField inputGeslacht = new TextField();
 
+        // De Terug-knop wordt geïnstantieerd en gestyled
         Button back = new Button("Back");
         back.setPrefSize(100, 50);
 
+        // De Toevoegen-knop wordt geïnstantieerd en gestyled
         Button add = new Button("Add student");
         add.setPrefSize(120, 40);
         add.setPadding(new Insets(10, 10, 10, 10));
 
+        // De setOnAction wordt voor het toevoegen van een student
         add.setOnAction(e -> {
             try {
+                // Alle gegevens die nodig zijn voor het maken van een student
                 String name = inputName.getText();
                 String geboorteDatum = inputDatum.getText();
                 String adres = inputAdres.getText();
@@ -65,6 +72,7 @@ public class addStudent extends Application {
                 String emailAdres = inputEmail.getText();
                 String geslacht = inputGeslacht.getText();
 
+                // Er wordt gecheckt of een van de invulvelden leeg zijn
                 if (name.isEmpty() || geboorteDatum.isEmpty() || adres.isEmpty() || woonplaats.isEmpty()
                         || land.isEmpty() || emailAdres.isEmpty() || geslacht.isEmpty()) {
                     error.setText("Een of meerdere velden zijn niet gevuld!");

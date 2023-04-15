@@ -8,6 +8,7 @@ public class Module {
     private String titel;
     private String progress;
 
+    // Algemene Constructor
     public Module(String versie, String naamContact, String emailContact, int volgNummer, String titel) {
         this.versie = versie;
         this.naamContact = naamContact;
@@ -16,11 +17,13 @@ public class Module {
         this.titel = titel;
     }
 
+    // Tweede constructor
     public Module(String titel, String progress) {
         this.titel = titel;
         this.progress = progress;
     }
 
+    // Getters en Setters
     public String getProgress() {
         return this.progress;
     }

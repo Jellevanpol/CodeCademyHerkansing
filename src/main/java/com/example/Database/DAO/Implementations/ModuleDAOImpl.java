@@ -81,24 +81,27 @@ public class ModuleDAOImpl implements ModuleDAO {
     }
 
     @Override
-    public ObservableList<Module> getAllModulesFromCursus(String cursusNaam) {
+    public ObservableList<Module> getAllModulesFromCursus(String cursusNaam, String emailAdres) {
         ObservableList<Module> modules = FXCollections.observableArrayList();
 
-        String query = "SELECT ci.Titel, cu.CursusNaam, cci.Voortgang " +
+        String query = "SELECT ci.Titel, cu.CursusNaam, cuci.Voortgang AS Voortgang_Module " +
                 "FROM Module m " +
                 "JOIN [Content-Item] ci on ci.ContentID = m.contentID " +
                 "JOIN [Cursus_ContentItem] cci on cci.ContentID = m.contentID " +
+                "JOIN [Cursist_Content-Item] cuci on cuci.ContentID = ci.ContentID " +
+                "JOIN Cursist c on c.CursistId = cuci.CursistId " +
                 "JOIN Cursus cu on cu.CursusID = cci.CursusID " +
-                "WHERE cu.CursusNaam = ? ";
+                "WHERE cu.CursusNaam = ? AND EmailAdres = ? ";
 
         try {
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, cursusNaam);
+            statement.setString(2, emailAdres);
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
                 String titel = resultSet.getString("Titel");
-                String progress = resultSet.getDouble("Voortgang") + " %";
+                String progress = resultSet.getDouble("Voortgang_Module") + " %";
                 Module module = new Module(titel, progress);
                 modules.add(module);
             }

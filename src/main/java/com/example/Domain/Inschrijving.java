@@ -5,12 +5,14 @@ public class Inschrijving {
     private Cursist cursist;
     private Cursus cursus;
 
+    // Algemene Constructor
     public Inschrijving(String datum, Cursist cursist, Cursus cursus) {
         this.datum = datum;
         this.cursist = cursist;
         this.cursus = cursus;
     }
 
+    // Getters en Setters
     public String getDatum() {
         return this.datum;
     }

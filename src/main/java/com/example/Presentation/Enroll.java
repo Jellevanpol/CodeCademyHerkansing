@@ -32,6 +32,7 @@ public class Enroll extends Application {
     private CursistDAO cursistDAO;
     List<String> cursistNames;
     List<Cursist> cursists;
+    List<String> cursistEmails;
 
     public Enroll() throws SQLException {
         databaseConnection = new DatabaseConnection();
@@ -39,6 +40,7 @@ public class Enroll extends Application {
         cursusDAO = new CursusDAOImpl(databaseConnection);
         cursistDAO = new CursistDAOImpl(databaseConnection);
         cursistNames = new ArrayList<>();
+        cursistEmails = new ArrayList<>(cursistDAO.getAllEmails());
         cursists = new ArrayList<>(cursistDAO.getAllCursisten());
     }
 
@@ -48,41 +50,44 @@ public class Enroll extends Application {
         BorderPane borderPain = new BorderPane();
         Text error = new Text("");
 
-        for (Cursist c : cursists) {
-            cursistNames.add(c.getNaam());
-        }
+        // for (Cursist c : cursists) {
+        // cursistNames.add(c.getNaam());
+        // }
 
         Text kiesText = new Text("Kies een cursist:");
-        
+
         Text kiesCursus = new Text("Kies een cursus:");
 
-        // Create the first combobox
         ComboBox<String> comboBox1 = new ComboBox<>();
-        comboBox1.getItems().addAll(cursistNames);
+        comboBox1.getItems().addAll(cursistEmails);
 
-        // Create the second combobox
         ComboBox<String> comboBox2 = new ComboBox<>();
         comboBox2.setDisable(true);
         comboBox1.valueProperty().addListener((obs, oldVal, newVal) -> {
             comboBox2.setDisable(false);
-            populateComboBoxCourse(comboBox2, comboBox1);
+            cursistNames = cursistDAO.getNotEnrolledInCursussen(newVal);
+            comboBox2.getItems().addAll(cursistNames);
         });
 
-        // Create the button
+        // De inschrijvingsknop wordt aangemaakt en uitgezet
         Button button = new Button("Enroll in course");
         button.setDisable(true);
+
+        // De inschrijvingsknop wordt aangezet, zodra er in de eerste comboBox een
+        // waarde zit
         comboBox2.valueProperty().addListener((obs, oldVal, newVal) -> {
             button.setDisable(false);
-            inschrijvingDAO.addInschrijving(cursistDAO.getCursistIdFromName(comboBox1.getValue()),
-                    cursusDAO.getCursusIdFromName(comboBox2.getValue()));
-            error.setText("");
 
+        });
+
+        button.setOnAction(e -> {
+            inschrijvingDAO.addInschrijving(cursistDAO.getCursistIdFromEmail(comboBox1.getValue()),
+                    cursusDAO.getCursusIdFromName(comboBox2.getValue()));
         });
 
         Button back = new Button("Back");
         back.setPrefSize(100, 50);
 
-        // Create a VBox layout and add the components
         VBox vBox = new VBox();
         vBox.getChildren().addAll(kiesText, comboBox1, kiesCursus, comboBox2, button, error);
         vBox.setAlignment(Pos.CENTER);
@@ -92,10 +97,8 @@ public class Enroll extends Application {
         borderPain.setBottom(back);
         BorderPane.setAlignment(back, Pos.BOTTOM_LEFT);
 
-        // Create the scene and add the layout
         Scene scene = new Scene(borderPain, 800, 600);
 
-        // Set the stage and show the window
         stage.setScene(scene);
         stage.show();
 
@@ -109,22 +112,22 @@ public class Enroll extends Application {
         });
     }
 
-    public void populateComboBoxCourse(ComboBox<String> comboBox, ComboBox<String> comboBox2) {
-        List<Cursus> cursussen = new ArrayList<>(cursusDAO.getAllCursussen());
-        List<String> cursusNames = new ArrayList<>();
-        for (Cursus c : cursussen) {
-            cursusNames.add(c.getCursusNaam());
-        }
-        List<Cursus> cursussenFromCursist = new ArrayList<>(cursusDAO.getAllCursussenFromCursist(comboBox2.getValue()));
-        List<String> cursusNames2 = new ArrayList<>();
+    // public void populateComboBoxCourse(ComboBox<String> comboBox,
+    // ComboBox<String> comboBox2) {
+    // List<Cursus> cursussen = new ArrayList<>(cursusDAO.getAllCursussen());
+    // List<String> cursusNames = new ArrayList<>();
+    // for (Cursus c : cursussen) {
+    // cursusNames.add(c.getCursusNaam());
+    // }
+    // List<Cursus> cursussenFromCursist = new
+    // ArrayList<>(cursusDAO.getAllCursussenFromEmail(comboBox2.getValue()));
+    // List<String> cursusNamesCursist = new ArrayList<>();
 
-        for (Cursus c : cursussenFromCursist) {
-            cursusNames2.add(c.getCursusNaam());
-        }
-        cursusNames.removeAll(cursusNames2);
+    // for (Cursus c : cursussenFromCursist) {
+    // cursusNamesCursist.add(c.getCursusNaam());
+    // }
+    // cursusNames.removeAll(cursusNamesCursist);
+    // comboBox.getItems().addAll(cursusNames);
 
-        for (Cursus c : cursussen) {
-            comboBox.getItems().addAll(cursusNames);
-        }
-    }
+    // }
 }

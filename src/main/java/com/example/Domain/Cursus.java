@@ -13,6 +13,7 @@ public class Cursus {
     private List<Cursus> aanbevelingen;
     private List<Cursist> cursist;
 
+    // Algemene Constructor
     public Cursus(String cursusNaam, String onderwerp, String introText, Niveau niveau, List<Module> modules,
             List<Cursus> aanbevelingen, List<Cursist> cursist) {
         this.cursusNaam = cursusNaam;
@@ -24,15 +25,18 @@ public class Cursus {
         this.cursist = cursist;
     }
 
+    // Tweede constructor
     public Cursus(String cursusNaam, List<Cursist> cursist) {
         this.cursusNaam = cursusNaam;
         this.cursist = cursist;
     }
 
+    // Derde constructor
     public Cursus(String cursusNaam) {
         this.cursusNaam = cursusNaam;
     }
 
+    // Getters en Setters
     public String getCursusNaam() {
         return this.cursusNaam;
     }

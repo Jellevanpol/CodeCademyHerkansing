@@ -10,4 +10,6 @@ public interface CursusDAO {
     List<Cursus> getAllCursussenFromCursist(String cursistNaam);
 
     int getCursusIdFromName(String cursistNaam);
+
+    List<Cursus> getAllCursussenFromEmail(String emailAdres);
 }

@@ -12,10 +12,11 @@ public class Cursist {
     private Date geboorteDatum;
     private String adres;
     private int cursistid;
-    private String geslacht;
+    private Geslacht geslacht;
     private List<Cursus> cursus;
 
-    public Cursist(String emailAdres, String naam, Date geboorteDatum, String adres, int cursistid, String geslacht) {
+    // Algemene Constructor
+    public Cursist(String emailAdres, String naam, Date geboorteDatum, String adres, int cursistid, Geslacht geslacht) {
         this.emailAdres = emailAdres;
         this.naam = naam;
         this.geboorteDatum = geboorteDatum;
@@ -24,10 +25,18 @@ public class Cursist {
         this.cursus = new ArrayList<>();
     }
 
+    // Tweede constructor
     public Cursist(String naam) {
         this.naam = naam;
     }
 
+    // Derde constructor
+    public Cursist(String naam, String emailAdres) {
+        this.emailAdres = emailAdres;
+        this.naam = naam;
+    }
+
+    // Getters en Setters
     public String getEmailAdres() {
         return this.emailAdres;
     }
@@ -52,13 +61,13 @@ public class Cursist {
         this.geboorteDatum = geboorteDatum;
     }
 
-    // public Adres getAdres() {
-    // return this.adres;
-    // }
+    public String getAdres() {
+        return this.adres;
+    }
 
-    // public void setAdres(Adres adres) {
-    // this.adres = adres;
-    // }
+    public void setAdres(String adres) {
+        this.adres = adres;
+    }
 
     public int getCursistid() {
         return this.cursistid;
@@ -68,13 +77,13 @@ public class Cursist {
         this.cursistid = cursistid;
     }
 
-    // public Geslacht getGeslacht() {
-    // return this.geslacht;
-    // }
+    public Geslacht getGeslacht() {
+        return this.geslacht;
+    }
 
-    // public void setGeslacht(Geslacht geslacht) {
-    // this.geslacht = geslacht;
-    // }
+    public void setGeslacht(Geslacht geslacht) {
+        this.geslacht = geslacht;
+    }
 
     public List<Cursus> getCursus() {
         return this.cursus;

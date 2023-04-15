@@ -7,6 +7,7 @@ public class Adres {
     private String postcode;
     private String land;
 
+    // Algemene Constructor
     public Adres(String woonplaats, String straatnaam, String huisnummer, String postcode, String land) {
         this.woonplaats = woonplaats;
         this.straatnaam = straatnaam;
@@ -15,6 +16,7 @@ public class Adres {
         this.land = land;
     }
 
+    // Getters en Setters
     public String getWoonplaats() {
         return this.woonplaats;
     }
