@@ -77,11 +77,13 @@ public class Completed extends Application {
             }
         });
 
+        // Root element aanmaken en elementen toevoegen
         BorderPane root = new BorderPane();
         root.setCenter(vbox);
         root.setBottom(back);
         BorderPane.setAlignment(back, Pos.BOTTOM_LEFT);
 
+        // Scene maken en laten zien
         Scene scene = new Scene(root, 800, 600);
         stage.setScene(scene);
         stage.show();

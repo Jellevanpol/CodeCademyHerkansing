@@ -35,7 +35,7 @@ public class AdresDAOImpl implements AdresDAO {
         }
     }
 
-    // Deze query haalt het nieuwst aangemaakte adres
+    // Deze query haalt het nieuwst aangemaakte adres op
     @Override
     public int getNewestAdress() {
         int id = 0;

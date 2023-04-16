@@ -1,6 +1,5 @@
 package com.example.Presentation;
 
-import java.sql.Date;
 import java.sql.SQLException;
 
 import com.example.Database.DatabaseConnection;

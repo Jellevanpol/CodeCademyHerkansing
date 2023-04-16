@@ -46,17 +46,12 @@ public class Enroll extends Application {
     @Override
     public void start(Stage stage) throws SQLException {
 
-        BorderPane borderPain = new BorderPane();
+        // Tekst elementen aanmaken
         Text error = new Text("");
-
-        // for (Cursist c : cursists) {
-        // cursistNames.add(c.getNaam());
-        // }
-
         Text kiesText = new Text("Kies een cursist:");
-
         Text kiesCursus = new Text("Kies een cursus:");
 
+        // ComboBox
         ComboBox<String> comboBox1 = new ComboBox<>();
         comboBox1.getItems().addAll(cursistEmails);
 
@@ -79,9 +74,16 @@ public class Enroll extends Application {
             button.setDisable(false);
         });
 
+        // Student uit eerste comboBox wordt ingeschreven bij tweede comboBox
         button.setOnAction(e -> {
             inschrijvingDAO.addInschrijving(cursistDAO.getCursistIdFromEmail(comboBox1.getValue()),
                     cursusDAO.getCursusIdFromName(comboBox2.getValue()));
+            try {
+                Homescreen homeScreen = new Homescreen();
+                homeScreen.start(stage);
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
         });
 
         Button back = new Button("Back");
@@ -92,6 +94,7 @@ public class Enroll extends Application {
         vBox.setAlignment(Pos.CENTER);
         vBox.setSpacing(10);
 
+        BorderPane borderPain = new BorderPane();
         borderPain.setCenter(vBox);
         borderPain.setBottom(back);
         BorderPane.setAlignment(back, Pos.BOTTOM_LEFT);
@@ -110,6 +113,7 @@ public class Enroll extends Application {
             }
         });
     }
+
     public static void main(String[] args) {
         launch(Homescreen.class);
     }
