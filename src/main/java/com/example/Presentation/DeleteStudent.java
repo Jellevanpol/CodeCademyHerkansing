@@ -57,6 +57,7 @@ public class DeleteStudent extends Application {
             }
         });
 
+        // Back button werking
         back.setOnAction(e -> {
             try {
                 StudentScreen studentscreen = new StudentScreen();
@@ -66,6 +67,7 @@ public class DeleteStudent extends Application {
             }
         });
 
+        // VBox maken en elementen toevoegen
         VBox vbox = new VBox(7, emailAdresText, inputEmail, error, delete);
         vbox.setMaxWidth(300);
         vbox.setAlignment(Pos.CENTER);
@@ -79,6 +81,7 @@ public class DeleteStudent extends Application {
         stage.setScene(scene);
         stage.show();
     }
+
     public static void main(String[] args) {
         launch(Homescreen.class);
     }

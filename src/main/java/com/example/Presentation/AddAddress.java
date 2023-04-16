@@ -87,7 +87,7 @@ public class AddAddress extends Application {
             }
         });
 
-        // back button werking
+        // Back button werking
         back.setOnAction(e -> {
             try {
                 StudentScreen studentscreen = new StudentScreen();

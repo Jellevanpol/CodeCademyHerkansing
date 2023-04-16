@@ -4,11 +4,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
 
 import com.example.Database.DatabaseConnection;
 import com.example.Database.DAO.AdresDAO;
-import com.example.Domain.Adres;
 
 public class AdresDAOImpl implements AdresDAO {
 
@@ -18,6 +16,7 @@ public class AdresDAOImpl implements AdresDAO {
         this.connection = databaseConnection.getConnection();
     }
 
+    // Deze query voegt een adres aan de database toe
     @Override
     public void addAdress(String huisnummer, String straatnaam, String woonplaats, String land, String postcode) {
         String query = "INSERT INTO Adres(Huisnummer, StraatNaam, Woonplaats, Land, Postcode) " +
@@ -36,6 +35,7 @@ public class AdresDAOImpl implements AdresDAO {
         }
     }
 
+    // Deze query haalt het nieuwst aangemaakte adres
     @Override
     public int getNewestAdress() {
         int id = 0;

@@ -54,17 +54,20 @@ public class Completed extends Application {
 
         dropdown.valueProperty().addListener((obs, oldVal, newVal) -> {
             if (dropdown.getValue() != null) {
+                // Aantal behaalde cursisten ophalen en in tekstveld zetten
                 behaald = cursistDAO.getCompletedCursisten(dropdown.getValue());
                 text.setText("Aantal cursisten die de cursus behaald hebben: " + behaald);
             }
         });
 
+        // VBoxen aanmaken en objecten toewijzen
         VBox vboxText = new VBox(text);
         vboxText.setAlignment(Pos.CENTER);
 
         VBox vbox = new VBox(10, kiesText, dropdown, vboxText);
         vbox.setAlignment(Pos.CENTER);
 
+        // Back
         back.setOnAction(e -> {
             try {
                 Homescreen homescreen = new Homescreen();

@@ -42,8 +42,8 @@ public class CursusDAOImpl implements CursusDAO {
         return cursussen;
     }
 
-    // Deze query haalt alle cursussen op waarin een cursist ingeschreven is door
-    // een naam
+    // Deze query haalt alle cursussen door een naam op waarin een cursist
+    // ingeschreven is
     @Override
     public List<Cursus> getAllCursussenFromCursist(String cursistNaam) {
         List<Cursus> cursussen = new ArrayList<>();
