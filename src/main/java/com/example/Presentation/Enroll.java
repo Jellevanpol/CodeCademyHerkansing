@@ -48,10 +48,10 @@ public class Enroll extends Application {
 
         // Tekst elementen aanmaken
         Text error = new Text("");
-        Text kiesText = new Text("Kies een cursist:");
-        Text kiesCursus = new Text("Kies een cursus:");
+        Text kiesText = new Text("Select a student:");
+        Text kiesCursus = new Text("Select a course:");
 
-        // ComboBox
+        // ComboBoxes aanmaken en vullen
         ComboBox<String> comboBox1 = new ComboBox<>();
         comboBox1.getItems().addAll(cursistEmails);
 
@@ -86,23 +86,9 @@ public class Enroll extends Application {
             }
         });
 
+        // Back button werking
         Button back = new Button("Back");
         back.setPrefSize(100, 50);
-
-        VBox vBox = new VBox();
-        vBox.getChildren().addAll(kiesText, comboBox1, kiesCursus, comboBox2, button, error);
-        vBox.setAlignment(Pos.CENTER);
-        vBox.setSpacing(10);
-
-        BorderPane borderPain = new BorderPane();
-        borderPain.setCenter(vBox);
-        borderPain.setBottom(back);
-        BorderPane.setAlignment(back, Pos.BOTTOM_LEFT);
-
-        Scene scene = new Scene(borderPain, 800, 600);
-
-        stage.setScene(scene);
-        stage.show();
 
         back.setOnAction(e -> {
             try {
@@ -112,6 +98,24 @@ public class Enroll extends Application {
                 ex.printStackTrace();
             }
         });
+
+        // VBox maken en elementen toevoegen
+        VBox vBox = new VBox();
+        vBox.getChildren().addAll(kiesText, comboBox1, kiesCursus, comboBox2, button, error);
+        vBox.setAlignment(Pos.CENTER);
+        vBox.setSpacing(10);
+
+        // Borderpane maken en elementen toevoegen
+        BorderPane borderPain = new BorderPane();
+        borderPain.setCenter(vBox);
+        borderPain.setBottom(back);
+        BorderPane.setAlignment(back, Pos.BOTTOM_LEFT);
+
+        // Scene maken en laten zien
+        Scene scene = new Scene(borderPain, 800, 600);
+        stage.setScene(scene);
+        stage.show();
+
     }
 
     public static void main(String[] args) {

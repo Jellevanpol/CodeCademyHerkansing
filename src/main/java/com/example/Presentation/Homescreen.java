@@ -22,6 +22,7 @@ public class Homescreen extends Application {
         Button completed = new Button("Completed courses");
         Button enroll = new Button("Enroll student in course");
 
+        // Styling buttons
         Insets insetsButtons = new Insets(10);
 
         // Styling module

@@ -30,17 +30,22 @@ public class top3 extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+        // Back button werking
         Button back = new Button("Back");
         back.setPrefSize(100, 50);
 
+        // Tekst element wordt geïnstantieerd
         Text topText = new Text("The top 3 most viewed webcasts are: ");
 
-        TableColumn<Webcast, String> titelColumn = new TableColumn<>("Titel");
+        // Kolom aanmaken voor tableview
+        TableColumn<Webcast, String> titelColumn = new TableColumn<>("Title");
         titelColumn.setCellValueFactory(new PropertyValueFactory<>("titel"));
 
-        TableColumn<Webcast, Double> progressColumn = new TableColumn<>("Aantal cursisten");
+        // Kolom aanmaken voor tableview
+        TableColumn<Webcast, Double> progressColumn = new TableColumn<>("Amount of students");
         progressColumn.setCellValueFactory(new PropertyValueFactory<>("aantal"));
 
+        // Kolommen aan tableview toevoegen
         tableView.getColumns().setAll(titelColumn, progressColumn);
         tableView.setMaxWidth(300);
         tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
@@ -48,9 +53,11 @@ public class top3 extends Application {
         tableView.setItems(webcasts);
         tableView.setPrefHeight(webcasts.size() * 37);
 
+        // VBox aanmaken en elementen toewijzen
         VBox vbox = new VBox(10, topText, tableView);
         vbox.setAlignment(Pos.CENTER);
 
+        // Werking back button
         back.setOnAction(e -> {
             try {
                 Homescreen homescreen = new Homescreen();
@@ -60,11 +67,13 @@ public class top3 extends Application {
             }
         });
 
+        // Borderpane maken en stylen
         BorderPane root = new BorderPane();
         root.setCenter(vbox);
         root.setBottom(back);
         BorderPane.setAlignment(back, Pos.BOTTOM_LEFT);
 
+        // Scene maken en laten zien
         Scene scene = new Scene(root, 800, 600);
         stage.setScene(scene);
         stage.show();

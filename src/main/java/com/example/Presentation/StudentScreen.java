@@ -49,17 +49,19 @@ public class StudentScreen extends Application {
     @Override
     public void start(Stage stage) throws Exception {
 
+        // Back button werking
         Button back = new Button("Back");
         back.setPrefSize(100, 50);
 
-        Text kiesText = new Text("Kies een cursist:");
-        Text kiesCursus = new Text("Kies een cursus:");
+        // Tekst elementen aanmaken
+        Text kiesText = new Text("Select a student:");
+        Text kiesCursus = new Text("Select a course:");
 
-        // String -> Cursist
+        // Dropdown voor studenten
         ComboBox<String> comboStudent = new ComboBox<>();
         populateComboBoxNames(comboStudent);
 
-        // String -> Cursus
+        // Dropdown voor cursussen
         ComboBox<String> comboCourse = new ComboBox<>();
         comboCourse.setDisable(true); // Disable the ComboBox initially
         comboStudent.valueProperty().addListener((obs, oldVal, newVal) -> {
@@ -69,12 +71,15 @@ public class StudentScreen extends Application {
             tableView.getItems().clear();
         });
 
-        TableColumn<Module, String> titelColumn = new TableColumn<>("Titel");
+        // Kolom aanmaken voor tableview
+        TableColumn<Module, String> titelColumn = new TableColumn<>("Title");
         titelColumn.setCellValueFactory(new PropertyValueFactory<>("titel"));
 
-        TableColumn<Module, Double> progressColumn = new TableColumn<>("Voortgang");
+        // Kolom aanmaken voor tableview
+        TableColumn<Module, Double> progressColumn = new TableColumn<>("Progress");
         progressColumn.setCellValueFactory(new PropertyValueFactory<>("progress"));
 
+        // Kolommen aan tableview toevoegen
         tableView.getColumns().setAll(titelColumn, progressColumn);
         tableView.setMaxWidth(300);
         tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
@@ -85,6 +90,7 @@ public class StudentScreen extends Application {
             }
         });
 
+        // Buttons maken
         Button createStudent = new Button("Add student");
         Button deleteStudent = new Button("Delete student");
         Button updateStudent = new Button("Edit student");
@@ -96,6 +102,7 @@ public class StudentScreen extends Application {
             updateStudent.setDisable(false);
         });
 
+        // Logic voor buttons
         createStudent.setOnAction(e -> {
             try {
                 AddAddress addAddressScreen = new AddAddress();
@@ -123,17 +130,21 @@ public class StudentScreen extends Application {
             }
         });
 
+        // HBox maken elementen toevoegen
         HBox hbox = new HBox(10, createStudent, deleteStudent, updateStudent);
         hbox.setAlignment(Pos.CENTER);
 
+        // VBox maken elementen toevoegen
         VBox vBox = new VBox(10, kiesText, comboStudent, kiesCursus, comboCourse, tableView, hbox);
         vBox.setAlignment(Pos.CENTER);
 
+        // Borderpane maken en elementen toevoegen
         BorderPane root = new BorderPane();
         root.setCenter(vBox);
         root.setBottom(back);
         BorderPane.setAlignment(back, Pos.BOTTOM_LEFT);
 
+        // Scene maken en laten zien
         Scene scene = new Scene(root, 800, 600);
         stage.setScene(scene);
         stage.show();
@@ -149,10 +160,12 @@ public class StudentScreen extends Application {
         });
     }
 
+    // Methode voor eerste dropdown vullen
     public void populateComboBoxNames(ComboBox<String> comboBox) {
         emails.stream().forEach(comboBox.getItems()::add);
     }
 
+    // Methode voor tweede dropdown vullen
     public void populateComboBoxCourses(ComboBox<String> comboBox, ComboBox<String> comboBox2) {
         String selectedCursistEmail = comboBox2.getValue();
         Cursist selectedCursist = null;
@@ -165,11 +178,8 @@ public class StudentScreen extends Application {
 
         if (selectedCursist != null) {
             String cursistNaam = selectedCursist.getNaam();
-
             courses = cursusDAO.getAllCursussenFromCursist(cursistNaam);
-
             comboBox.getItems().clear();
-
             for (Cursus c : courses) {
                 comboBox.getItems().add(c.getCursusNaam());
             }

@@ -34,11 +34,11 @@ public class AddAddress extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         // Alle teksten worden geïnstantieerd
-        Text huisnummerText = new Text("Huisnummer");
-        Text straatNaamText = new Text("Straatnaam");
-        Text woonplaatsText = new Text("Woonplaats");
-        Text postcodeText = new Text("Postode");
-        Text landText = new Text("Land");
+        Text huisnummerText = new Text("House number");
+        Text straatNaamText = new Text("Streetname");
+        Text woonplaatsText = new Text("Residence");
+        Text postcodeText = new Text("Postal code");
+        Text landText = new Text("Country");
         Text error = new Text();
 
         // Alle TextFields worden geïnstantieerd
@@ -70,7 +70,7 @@ public class AddAddress extends Application {
                 // Er wordt gecheckt of een van de invulvelden leeg zijn
                 if (huisnummer.isEmpty() || straatnaam.isEmpty() || woonplaats.isEmpty()
                         || land.isEmpty() || postcode.isEmpty()) {
-                    error.setText("Een of meerdere velden zijn niet gevuld!");
+                    error.setText("One or more input fields are empty!");
                 } else {
                     // Check of de postcode correct is
                     if (postCodeCheck.correctPostcode(postcode)) {
@@ -79,7 +79,7 @@ public class AddAddress extends Application {
                         addStudent addStudentScreen = new addStudent();
                         addStudentScreen.start(stage);
                     } else {
-                        error.setText("Verkeerde postcode format!");
+                        error.setText("Wrong postalcode format!");
                     }
                 }
             } catch (Exception ex) {

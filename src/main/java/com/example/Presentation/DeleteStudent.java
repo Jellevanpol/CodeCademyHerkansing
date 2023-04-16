@@ -29,18 +29,21 @@ public class DeleteStudent extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+        // Alle tekst elementen worden geïnstantieerd
         Text emailAdresText = new Text("Email adres");
         Text error = new Text();
-
         TextField inputEmail = new TextField();
 
+        // De back button wordt geïnstantieerd
         Button back = new Button("Back");
         back.setPrefSize(100, 50);
 
+        // De delete button wordt geïnstantieerd
         Button delete = new Button("Delete student");
         delete.setPrefSize(120, 40);
         delete.setPadding(new Insets(10, 10, 10, 10));
 
+        // Set on action van de delete button
         delete.setOnAction(e -> {
             try {
                 String emailAdres = inputEmail.getText();
@@ -48,6 +51,7 @@ public class DeleteStudent extends Application {
                 if (cursistDAO.deleteCursist(emailAdres) == false) {
                     error.setText("Email niet gevonden!");
                 } else {
+                    // Cursist verwijderen
                     cursistDAO.deleteCursist(emailAdres);
                     StudentScreen studentscreen = new StudentScreen();
                     studentscreen.start(stage);

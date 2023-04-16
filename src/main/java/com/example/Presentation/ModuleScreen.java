@@ -42,31 +42,37 @@ public class ModuleScreen extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        // Create the dropdown menu
+
+        // Back button maken
         Button back = new Button("Back");
         back.setPrefSize(100, 50);
 
-        Text kiesText = new Text("Kies een cursus:");
+        // Tekst elementen
+        Text kiesText = new Text("Select a course:");
 
+        // Create the dropdown
         ComboBox<String> dropdown = new ComboBox<>();
         cursussen.stream().map(Cursus::getCursusNaam).forEach(dropdown.getItems()::add);
         dropdown.getSelectionModel().selectFirst();
         dropdown.setMaxWidth(300);
+        dropdown.setValue(null);
 
         // Create the table view
-        TableColumn<Module, String> titelColumn = new TableColumn<>("Titel");
+        TableColumn<Module, String> titelColumn = new TableColumn<>("Title");
         titelColumn.setCellValueFactory(new PropertyValueFactory<>("titel"));
 
-        TableColumn<Module, Double> progressColumn = new TableColumn<>("Voortgang");
+        TableColumn<Module, Double> progressColumn = new TableColumn<>("Progress");
         progressColumn.setCellValueFactory(new PropertyValueFactory<>("progress"));
 
         tableView.getColumns().setAll(titelColumn, progressColumn);
         tableView.setMaxWidth(300);
         tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-        if (dropdown.getValue() != null) {
-            ObservableList<Module> modules = moduleDAO.getAllAverageModulesFromCursus(dropdown.getValue());
-            tableView.setItems(modules);
-        }
+        dropdown.valueProperty().addListener((obs, oldVal, newVal) -> {
+            if (dropdown.getValue() != null) {
+                ObservableList<Module> modules = moduleDAO.getAllAverageModulesFromCursus(dropdown.getValue());
+                tableView.setItems(modules);
+            }
+        });
 
         // Create a VBox to hold the dropdown and the table view
         VBox vBox = new VBox(10, kiesText, dropdown, tableView);

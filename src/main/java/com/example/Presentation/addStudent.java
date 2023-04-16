@@ -40,10 +40,10 @@ public class addStudent extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         // Alle teksten worden geïnstantieerd
-        Text nameText = new Text("Naam");
-        Text geboorteDatumText = new Text("Geboorte datum");
-        Text emailAdresText = new Text("Email adres (LET OP: gebruik een correct format!)");
-        Text geslachtText = new Text("Man, vrouw of anders");
+        Text nameText = new Text("Name");
+        Text geboorteDatumText = new Text("Birthdate");
+        Text emailAdresText = new Text("Email");
+        Text geslachtText = new Text("Man, vrouw or anders");
         Text error = new Text();
 
         // Alle TextFields worden geïnstantieerd
@@ -71,7 +71,7 @@ public class addStudent extends Application {
 
                 // Er wordt gecheckt of een van de invulvelden leeg zijn
                 if (name.isEmpty() || geboorteDatum.isEmpty() || emailAdres.isEmpty() || geslacht.isEmpty()) {
-                    error.setText("Een of meerdere velden zijn niet gevuld!");
+                    error.setText("One or more input fields are empty!");
                 } else {
                     // Check of de email en datum valide is
                     if (emailCheck.correctEmail(emailAdres) && datumCheck.isValidDate(geboorteDatum)) {
@@ -81,7 +81,7 @@ public class addStudent extends Application {
                         StudentScreen studentscreen = new StudentScreen();
                         studentscreen.start(stage);
                     } else {
-                        error.setText("1 of meer velden verkeerd geformatteerd!");
+                        error.setText("One or more input fields are formatted incorrectly!");
                     }
                 }
             } catch (Exception ex) {

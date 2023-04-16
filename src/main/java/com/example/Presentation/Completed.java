@@ -42,21 +42,21 @@ public class Completed extends Application {
         // Back button en tekst instatiëren
         Button back = new Button("Back");
         back.setPrefSize(100, 50);
-        Text kiesText = new Text("Kies een cursus:");
+        Text kiesText = new Text("Select a course:");
         Text text = new Text();
-        text.setText("Aantal cursisten die de cursus behaald hebben: xxx");
+        text.setText("Amount of students that have completed ... : xxx");
 
         // Dropdown van cursussen maken en een listener geven
         ComboBox<String> dropdown = new ComboBox<>();
         cursussen.stream().map(Cursus::getCursusNaam).forEach(dropdown.getItems()::add);
         dropdown.getSelectionModel().selectFirst();
         dropdown.setMaxWidth(Double.MAX_VALUE);
-
+        dropdown.setValue(null);
         dropdown.valueProperty().addListener((obs, oldVal, newVal) -> {
             if (dropdown.getValue() != null) {
                 // Aantal behaalde cursisten ophalen en in tekstveld zetten
                 behaald = cursistDAO.getCompletedCursisten(dropdown.getValue());
-                text.setText("Aantal cursisten die de cursus behaald hebben: " + behaald);
+                text.setText("Amount of students that have completed " + dropdown.getValue() + ": " + behaald);
             }
         });
 

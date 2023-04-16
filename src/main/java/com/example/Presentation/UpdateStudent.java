@@ -38,13 +38,13 @@ public class UpdateStudent extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         // Alle teksten worden geïnstantieerd
-        Text nameText = new Text("Naam");
-        Text geboorteDatumText = new Text("Geboorte datum");
-        Text emailAdresText = new Text("Email adres (LET OP: gebruik een correct format!)");
-        Text geslachtText = new Text("Man, vrouw of anders");
+        Text nameText = new Text("Name");
+        Text geboorteDatumText = new Text("Birthdate");
+        Text emailAdresText = new Text("Email");
+        Text geslachtText = new Text("Man, vrouw or anders");
         Text error = new Text();
         error.setFill(Color.RED);
-        Text question = new Text("Welke cursist wilt u updaten?");
+        Text question = new Text("Which student should be updated");
 
         // Alle tekstvelden worden geïnstantieerd
         TextField inputName = new TextField();
@@ -54,19 +54,20 @@ public class UpdateStudent extends Application {
         inputEmail.setPromptText("e.g. Johndoe@gmail.com");
         TextField inputGeslacht = new TextField();
         TextField awnser = new TextField();
-        awnser.setPromptText("Email adres");
+        awnser.setPromptText("Email");
         awnser.setFocusTraversable(false);
         setFieldsDisabled(true, inputName, inputDatum, inputEmail,
                 inputGeslacht);
 
+        // Buttons aanmaken en stylen
         Button back = new Button("Back");
         back.setPrefSize(100, 50);
-
         Button update = new Button("Update student");
         update.setPrefSize(120, 40);
         update.setDisable(true);
         update.setPadding(new Insets(10, 10, 10, 10));
 
+        // Checken of answer valide is
         awnser.textProperty().addListener((observable, oldValue, newValue) -> {
             if (cursistDAO.checkEmailCursist(newValue)) {
                 setFieldsDisabled(false, inputName, inputDatum, inputEmail,
@@ -75,20 +76,21 @@ public class UpdateStudent extends Application {
             } else {
                 setFieldsDisabled(true, inputName, inputDatum, inputEmail,
                         inputGeslacht);
-                error.setText("User niet gevonden!");
+                error.setText("Student not found!");
             }
         });
 
+        // Logica voor updaten student
         update.setOnAction(e -> {
-
             try {
+                // Variable vullen
                 String name = inputName.getText();
                 String geboorteDatum = inputDatum.getText();
                 String emailAdres = inputEmail.getText();
                 String geslacht = inputGeslacht.getText();
 
                 if (name.isEmpty() || geboorteDatum.isEmpty() || emailAdres.isEmpty() || geslacht.isEmpty()) {
-                    error.setText("Een of meerdere velden zijn niet gevuld!");
+                    error.setText("One or more input fields are empty!");
                     update.setDisable(true);
                 } else {
                     if (emailCheck.correctEmail(emailAdres) && datumCheck.isValidDate(geboorteDatum)) {
@@ -97,13 +99,14 @@ public class UpdateStudent extends Application {
                         StudentScreen studentscreen = new StudentScreen();
                         studentscreen.start(stage);
                     }
-                    error.setText("1 of meer velden verkeerd geformatteerd!");
+                    error.setText("One or more input fields are empty!");
                 }
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
         });
 
+        // Back button werking
         back.setOnAction(e -> {
             try {
                 StudentScreen studentscreen = new StudentScreen();
@@ -113,26 +116,31 @@ public class UpdateStudent extends Application {
             }
         });
 
+        // HBox maken en elementen toevoegen
         HBox hbox = new HBox(5, question, awnser);
         hbox.setMaxWidth(300);
         hbox.setPadding(new Insets(0, 0, 20, 0));
         hbox.setAlignment(Pos.CENTER);
 
+        // VBox maken en elementen toevoegen
         VBox vbox = new VBox(7, hbox, nameText, inputName, geboorteDatumText, inputDatum, emailAdresText, inputEmail,
                 geslachtText, inputGeslacht, error,
                 update);
         vbox.setMaxWidth(300);
         vbox.setAlignment(Pos.CENTER);
 
+        // BorderPane maken en elementen toevoegen
         BorderPane root = new BorderPane();
         root.setCenter(vbox);
         root.setBottom(back);
         BorderPane.setAlignment(back, Pos.BOTTOM_LEFT);
 
+        // Scene maken en laten zien
         Scene scene = new Scene(root, 800, 600);
         stage.setScene(scene);
         stage.show();
 
+        // Buttons disablen als er een inputveld leeg is
         update.setDisable(true);
         inputName.textProperty().addListener((observable, oldValue, newValue) -> {
             update.setDisable(isAnyTextFieldEmpty(inputName, inputDatum,
@@ -152,12 +160,14 @@ public class UpdateStudent extends Application {
         });
     }
 
+    // Method om veld te disablen
     private void setFieldsDisabled(boolean disable, TextField... fields) {
         for (TextField field : fields) {
             field.setDisable(disable);
         }
     }
 
+    // Methode voor checken of een veld leeg is
     private boolean isAnyTextFieldEmpty(TextField... fields) {
         for (TextField field : fields) {
             if (field.getText().isEmpty()) {
